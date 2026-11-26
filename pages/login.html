@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Student Login and Registration portal for the Nexus Computing Society (NCS). Access your society dashboard, events, and member resources.">
+  <title>Student Login &amp; Registration | Nexus Computing Society</title>
+  <link rel="stylesheet" href="../css/student-account.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Sticky Header & Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="Nexus Computing Society Home">
+        <img
+          src="../images/logo.png"
+          alt="Nexus Computing Society Logo"
+          class="brand-logo"
+          width="44"
+          height="44"
+        >
+        <div class="brand-text">
+          <span class="brand-name">Nexus Computing Society</span>
+          <span class="brand-tagline">Student Portal</span>
+        </div>
+      </a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-controls="primary-nav"
+        aria-expanded="false"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-line" aria-hidden="true"></span>
+        <span class="hamburger-line" aria-hidden="true"></span>
+        <span class="hamburger-line" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="primary-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="workshops.html" class="nav-link">Workshops</a></li>
+          <li><a href="team.html" class="nav-link">Team</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+          <li><a href="login.html" class="nav-link nav-link-cta is-active" aria-current="page">Student Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content" class="auth-main">
+    <section class="auth-section" aria-labelledby="portal-heading">
+      <div class="container auth-container">
+        <div class="auth-intro">
+          <span class="portal-badge">NCS Member Access</span>
+          <h1 id="portal-heading" class="auth-title">Student Portal Authentication</h1>
+          <p class="auth-subtitle">
+            Sign in with your university roll number or NU email, or register a new Nexus Computing Society student account.
+          </p>
+        </div>
+
+        <!-- Centered Authentication Card -->
+        <div class="auth-card">
+          <!-- Existing Session Notice (populated via JS if already logged in) -->
+          <div class="session-banner" id="session-banner" role="status" hidden>
+            <div class="session-banner-text">
+              <strong id="session-student-name">Active Student Session</strong>
+              <span id="session-student-meta"></span>
+            </div>
+            <a href="dashboard.html" class="session-banner-link">Go to Dashboard</a>
+          </div>
+
+          <!-- Interactive Login / Create Account Tabs -->
+          <div class="auth-tabs" role="tablist" aria-label="Authentication Mode">
+            <button
+              type="button"
+              role="tab"
+              id="tab-login"
+              class="auth-tab is-active"
+              aria-selected="true"
+              aria-controls="panel-login"
+              data-tab="login"
+            >
+              Student Login
+            </button>
+            <button
+              type="button"
+              role="tab"
+              id="tab-register"
+              class="auth-tab"
+              aria-selected="false"
+              aria-controls="panel-register"
+              data-tab="register"
+              tabindex="-1"
+            >
+              Create Account
+            </button>
+          </div>
+
+          <!-- Live Status / Confirmation Banner -->
+          <div
+            class="auth-status"
+            id="auth-status"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></div>
+
+          <!-- Tab Panel 1: Student Login -->
+          <div
+            id="panel-login"
+            class="tab-panel is-active"
+            role="tabpanel"
+            aria-labelledby="tab-login"
+          >
+            <form id="login-form" class="auth-form" novalidate>
+              <div class="form-group">
+                <label for="login-identifier" class="form-label">
+                  Roll Number or NU Email <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="login-identifier"
+                  name="identifier"
+                  class="form-input"
+                  placeholder="e.g. 23I-0542 or i230542@isb.nu.edu.pk"
+                  autocomplete="username"
+                  aria-describedby="login-identifier-hint login-identifier-error"
+                  required
+                >
+                <p id="login-identifier-hint" class="field-hint">
+                  Accepts format XXi-XXXX or @nu.edu.pk / @isb.nu.edu.pk email.
+                </p>
+                <p id="login-identifier-error" class="field-error" role="alert" hidden></p>
+              </div>
+
+              <div class="form-group">
+                <label for="login-password" class="form-label">
+                  Password <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <div class="password-wrapper">
+                  <input
+                    type="password"
+                    id="login-password"
+                    name="password"
+                    class="form-input password-input"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    aria-describedby="login-password-error"
+                    required
+                  >
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    data-target="login-password"
+                    aria-label="Show password"
+                    aria-pressed="false"
+                  >
+                    <svg class="icon-eye" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <svg class="icon-eye-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path>
+                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  </button>
+                </div>
+                <p id="login-password-error" class="field-error" role="alert" hidden></p>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full">
+                Sign In to Portal
+              </button>
+            </form>
+
+            <div class="auth-divider" role="separator">
+              <span>Quick Preview Access</span>
+            </div>
+
+            <button type="button" id="demo-login-btn" class="btn btn-demo btn-full">
+              One-Click Demo Student Login
+            </button>
+            <p class="demo-note">
+              Signs in as demo member <strong>Ayesha Khan (23I-0542)</strong> and opens the dashboard.
+            </p>
+          </div>
+
+          <!-- Tab Panel 2: Create Account -->
+          <div
+            id="panel-register"
+            class="tab-panel"
+            role="tabpanel"
+            aria-labelledby="tab-register"
+            hidden
+          >
+            <form id="register-form" class="auth-form" novalidate>
+              <div class="form-group">
+                <label for="reg-name" class="form-label">
+                  Full Name <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="reg-name"
+                  name="fullName"
+                  class="form-input"
+                  placeholder="e.g. Ayesha Khan"
+                  autocomplete="name"
+                  aria-describedby="reg-name-error"
+                  required
+                >
+                <p id="reg-name-error" class="field-error" role="alert" hidden></p>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="reg-roll" class="form-label">
+                    Roll Number <span class="required-mark" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="reg-roll"
+                    name="rollNo"
+                    class="form-input"
+                    placeholder="e.g. 23I-0542"
+                    aria-describedby="reg-roll-error"
+                    required
+                  >
+                  <p id="reg-roll-error" class="field-error" role="alert" hidden></p>
+                </div>
+
+                <div class="form-group">
+                  <label for="reg-department" class="form-label">
+                    Degree Department <span class="required-mark" aria-hidden="true">*</span>
+                  </label>
+                  <select
+                    id="reg-department"
+                    name="department"
+                    class="form-select"
+                    aria-describedby="reg-department-error"
+                    required
+                  >
+                    <option value="">Select department</option>
+                    <option value="BS Computer Science">BS Computer Science</option>
+                    <option value="BS Software Engineering">BS Software Engineering</option>
+                    <option value="BS Artificial Intelligence">BS Artificial Intelligence</option>
+                    <option value="BS Cyber Security">BS Cyber Security</option>
+                    <option value="BS Data Science">BS Data Science</option>
+                    <option value="BS Electrical Engineering">BS Electrical Engineering</option>
+                  </select>
+                  <p id="reg-department-error" class="field-error" role="alert" hidden></p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="reg-email" class="form-label">
+                  NU University Email <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="reg-email"
+                  name="email"
+                  class="form-input"
+                  placeholder="e.g. i230542@isb.nu.edu.pk"
+                  autocomplete="email"
+                  aria-describedby="reg-email-hint reg-email-error"
+                  required
+                >
+                <p id="reg-email-hint" class="field-hint">
+                  Must end with @nu.edu.pk or @isb.nu.edu.pk.
+                </p>
+                <p id="reg-email-error" class="field-error" role="alert" hidden></p>
+              </div>
+
+              <div class="form-group">
+                <label for="reg-password" class="form-label">
+                  Create Password <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <div class="password-wrapper">
+                  <input
+                    type="password"
+                    id="reg-password"
+                    name="password"
+                    class="form-input password-input"
+                    placeholder="Minimum 8 chars with upper, number &amp; symbol"
+                    autocomplete="new-password"
+                    aria-describedby="strength-label reg-password-error"
+                    required
+                  >
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    data-target="reg-password"
+                    aria-label="Show password"
+                    aria-pressed="false"
+                  >
+                    <svg class="icon-eye" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <svg class="icon-eye-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path>
+                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Live Password Strength Meter -->
+                <div class="strength-meter" id="strength-meter" data-strength="empty">
+                  <div class="strength-header">
+                    <span class="strength-title">Password Strength:</span>
+                    <span class="strength-label" id="strength-label">Not set</span>
+                  </div>
+                  <div class="strength-bars" aria-hidden="true">
+                    <span class="strength-bar"></span>
+                    <span class="strength-bar"></span>
+                    <span class="strength-bar"></span>
+                  </div>
+                  <ul class="strength-checklist" aria-label="Password requirements">
+                    <li id="req-length" class="req-item">8+ characters</li>
+                    <li id="req-upper" class="req-item">Uppercase letter (A-Z)</li>
+                    <li id="req-number" class="req-item">Number (0-9)</li>
+                    <li id="req-symbol" class="req-item">Symbol (!@#$...)</li>
+                  </ul>
+                </div>
+
+                <p id="reg-password-error" class="field-error" role="alert" hidden></p>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full">
+                Create Student Account
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Matching Society Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-col">
+        <a href="../index.html" class="brand footer-brand">
+          <img
+            src="../images/logo.png"
+            alt="Nexus Computing Society Logo"
+            class="brand-logo"
+            width="40"
+            height="40"
+          >
+          <div class="brand-text">
+            <span class="brand-name">Nexus Computing Society</span>
+            <span class="brand-tagline">Innovate · Code · Collaborate</span>
+          </div>
+        </a>
+        <p class="footer-description">
+          Empowering student developers, researchers, and builders through hands-on workshops, hackathons, and technical mentorship.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Portal Pages</h2>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="about.html">About NCS</a></li>
+          <li><a href="events.html">Events &amp; Hackathons</a></li>
+          <li><a href="workshops.html">Technical Workshops</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Student Hub</h2>
+        <ul class="footer-links">
+          <li><a href="team.html">Executive Team</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="login.html" aria-current="page">Student Login</a></li>
+          <li><a href="dashboard.html">Member Dashboard</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Campus Chapter</h2>
+        <p class="footer-meta">FAST-NUCES Islamabad Campus</p>
+        <p class="footer-meta">A.K. Brohi Road, H-11/4, Islamabad</p>
+        <p class="footer-meta">ncs@isb.nu.edu.pk</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; <span id="footer-year">2026</span> Nexus Computing Society. All rights reserved.</p>
+        <p class="footer-bottom-tag">SE-D Group 09 · University Portal</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/student-account.js"></script>
+</body>
+</html>
