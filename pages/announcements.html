@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Official announcements, hackathon notices, recruitment updates, and campus bulletins from the Nexus Computing Society.">
+  <title>Announcements | Nexus Computing Society</title>
+  <link rel="stylesheet" href="../css/campus-info.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand-link" href="../index.html">
+        <img
+          src="../images/logo.png"
+          alt="Nexus Computing Society Logo"
+          class="brand-logo"
+          width="44"
+          height="44"
+        >
+        <span class="brand-text">
+          <span class="brand-title">Nexus Computing Society</span>
+          <span class="brand-subtitle">University Portal</span>
+        </span>
+      </a>
+
+      <button
+        type="button"
+        id="nav-toggle"
+        class="nav-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+      >
+        <span class="nav-toggle-icon" aria-hidden="true">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </span>
+      </button>
+
+      <nav id="primary-navigation" class="primary-nav" aria-label="Primary portal navigation">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html">Home</a></li>
+          <li><a class="nav-link" href="about.html">About</a></li>
+          <li><a class="nav-link" href="events.html">Events</a></li>
+          <li><a class="nav-link" href="workshops.html">Workshops</a></li>
+          <li><a class="nav-link" href="hackathons.html">Hackathons</a></li>
+          <li><a class="nav-link" href="projects.html">Projects</a></li>
+          <li><a class="nav-link" href="resources.html">Resources</a></li>
+          <li><a class="nav-link" href="gallery.html">Gallery</a></li>
+          <li><a class="nav-link" href="team.html">Executive Team</a></li>
+          <li><a class="nav-link" href="membership.html">Membership</a></li>
+          <li><a class="nav-link" href="faq.html">FAQ</a></li>
+          <li><a class="nav-link" href="contact.html">Contact</a></li>
+          <li><a class="nav-link" href="announcements.html" aria-current="page">Announcements</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-main">
+    <div class="container">
+      <section class="page-hero" aria-labelledby="announcements-heading">
+        <div>
+          <p class="hero-eyebrow">
+            <span class="hero-dot" aria-hidden="true"></span>
+            Campus Info &amp; Notice Board
+          </p>
+          <h1 id="announcements-heading" class="hero-title">Society Announcements</h1>
+          <p class="hero-description">
+            Stay up to date with official Nexus Computing Society dispatches, hackathon deadlines,
+            executive recruitment calls, and department lab notices.
+          </p>
+        </div>
+
+        <div class="hero-actions">
+          <div id="unread-counter-badge" class="unread-counter-badge" aria-live="polite">
+            <span id="unread-count-number" class="unread-count-number">0</span>
+            <span id="unread-count-label">Unread Notices</span>
+          </div>
+          <button type="button" id="mark-all-read-btn" class="btn btn-lime">
+            Mark All as Read
+          </button>
+        </div>
+      </section>
+
+      <section class="controls-section" aria-label="Search and filter announcements">
+        <div class="controls-top-row">
+          <div class="search-field">
+            <label for="announcement-search" class="sr-only">Search announcements by keyword</label>
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="search"
+              id="announcement-search"
+              class="search-input"
+              placeholder="Search notices by title, keyword, or author..."
+              autocomplete="off"
+            >
+            <button
+              type="button"
+              id="search-clear-btn"
+              class="search-clear-btn"
+              aria-label="Clear search query"
+              hidden
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-toolbar">
+          <div class="category-filters" role="group" aria-label="Filter notices by category">
+            <button type="button" class="filter-btn is-active" data-category="All" aria-pressed="true">All</button>
+            <button type="button" class="filter-btn" data-category="Urgent" aria-pressed="false">Urgent</button>
+            <button type="button" class="filter-btn" data-category="Hackathons" aria-pressed="false">Hackathons</button>
+            <button type="button" class="filter-btn" data-category="Recruitment" aria-pressed="false">Recruitment</button>
+            <button type="button" class="filter-btn" data-category="General" aria-pressed="false">General</button>
+          </div>
+
+          <p id="feed-meta-status" class="feed-meta-status" aria-live="polite">
+            Showing all notices
+          </p>
+        </div>
+      </section>
+
+      <section class="feed-section" aria-labelledby="notice-feed-heading">
+        <h2 id="notice-feed-heading" class="sr-only">Notice Feed</h2>
+
+        <div id="announcements-feed" class="announcements-grid"></div>
+
+        <section id="empty-state" class="empty-state" aria-live="polite" hidden>
+          <div class="empty-state-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <h3 class="empty-state-title">No matching announcements found</h3>
+          <p class="empty-state-text">
+            No notices match your current search term or category filter. Clear your filters to view all society updates.
+          </p>
+          <button type="button" id="reset-filters-btn" class="btn btn-lime">
+            Reset Filters
+          </button>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand-link" href="../index.html">
+            <img
+              src="../images/logo.png"
+              alt="Nexus Computing Society Logo"
+              class="brand-logo"
+              width="40"
+              height="40"
+            >
+            <span class="brand-text">
+              <span class="brand-title">Nexus Computing Society</span>
+              <span class="brand-subtitle">Department of Software Engineering</span>
+            </span>
+          </a>
+          <p class="footer-description">
+            Connecting student developers, researchers, and builders through hackathons,
+            technical workshops, and collaborative campus initiatives.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">Portal Pages</h2>
+          <ul class="footer-links">
+            <li><a class="footer-link" href="../index.html">Home</a></li>
+            <li><a class="footer-link" href="about.html">About</a></li>
+            <li><a class="footer-link" href="events.html">Events</a></li>
+            <li><a class="footer-link" href="workshops.html">Workshops</a></li>
+            <li><a class="footer-link" href="hackathons.html">Hackathons</a></li>
+            <li><a class="footer-link" href="projects.html">Projects</a></li>
+            <li><a class="footer-link" href="resources.html">Resources</a></li>
+            <li><a class="footer-link" href="gallery.html">Gallery</a></li>
+            <li><a class="footer-link" href="team.html">Executive Team</a></li>
+            <li><a class="footer-link" href="membership.html">Membership</a></li>
+            <li><a class="footer-link" href="faq.html">FAQ</a></li>
+            <li><a class="footer-link" href="contact.html">Contact</a></li>
+            <li><a class="footer-link" href="announcements.html">Announcements</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">Society Desk</h2>
+          <ul class="footer-meta-list">
+            <li>Computing Innovation Lab, Block C (Room 304)</li>
+            <li>Office Hours: Mon–Fri, 10:00 AM – 4:00 PM</li>
+            <li><a class="footer-link" href="events.html">Upcoming Campus Events</a></li>
+            <li><a class="footer-link" href="contact.html">Submit a Notice Request</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nexus Computing Society. All rights reserved.</p>
+        <p>Page 13 &middot; Campus Info &amp; Announcements Portal</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/campus-info.js"></script>
+</body>
+</html>
