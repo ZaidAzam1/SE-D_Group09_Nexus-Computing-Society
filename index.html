@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nexus Computing Society university portal — technical wings, hackathons, workshops, and student developer community.">
+  <title>Nexus Computing Society | Campus Computing &amp; Innovation Portal</title>
+  <link rel="stylesheet" href="css/home-directory.css">
+  <script src="js/home-directory.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Live Announcement Banner -->
+  <div class="announcement-banner" role="region" aria-label="Latest society announcement">
+    <div class="container announcement-inner">
+      <div class="announcement-content">
+        <span class="badge-live">LIVE ALERT</span>
+        <p class="announcement-text">
+          <strong>Nexus CodeRush 2026</strong> team registrations are now open — submit your 4-member roster before December 8.
+        </p>
+      </div>
+      <a class="announcement-link" href="pages/announcements.html">
+        Read Announcements
+        <span aria-hidden="true">-&gt;</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Sticky Header & Accessible Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Nexus Computing Society Home">
+        <img class="brand-logo" src="images/logo.png" alt="Nexus Computing Society Logo" width="48" height="48">
+        <span class="brand-text">
+          <span class="brand-name">Nexus Computing Society</span>
+          <span class="brand-sub">University Tech Portal</span>
+        </span>
+      </a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-controls="primary-navigation"
+        aria-expanded="false"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-box" aria-hidden="true">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </span>
+        <span class="nav-toggle-label">Menu</span>
+      </button>
+
+      <nav class="primary-nav" id="primary-navigation" aria-label="Primary portal navigation">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a class="nav-link is-active" href="index.html" aria-current="page">Home</a>
+          </li>
+
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-trigger" aria-expanded="false" aria-controls="menu-societies">
+              Societies
+              <span class="chevron" aria-hidden="true">&#9662;</span>
+            </button>
+            <ul class="dropdown-menu" id="menu-societies">
+              <li><a class="dropdown-link" href="pages/directory.html">Society Directory</a></li>
+              <li><a class="dropdown-link" href="pages/society-details.html">Society Details</a></li>
+              <li><a class="dropdown-link" href="pages/join-society.html">Join a Wing</a></li>
+              <li><a class="dropdown-link" href="pages/my-societies.html">My Societies</a></li>
+              <li><a class="dropdown-link" href="pages/membership-status.html">Membership Status</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-trigger" aria-expanded="false" aria-controls="menu-events">
+              Events
+              <span class="chevron" aria-hidden="true">&#9662;</span>
+            </button>
+            <ul class="dropdown-menu" id="menu-events">
+              <li><a class="dropdown-link" href="pages/events.html">Events Calendar</a></li>
+              <li><a class="dropdown-link" href="pages/event-details.html">Event Details</a></li>
+              <li><a class="dropdown-link" href="pages/event-register.html">Event Registration</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-trigger" aria-expanded="false" aria-controls="menu-community">
+              Community
+              <span class="chevron" aria-hidden="true">&#9662;</span>
+            </button>
+            <ul class="dropdown-menu" id="menu-community">
+              <li><a class="dropdown-link" href="pages/announcements.html">Announcements</a></li>
+              <li><a class="dropdown-link" href="pages/gallery.html">Media Gallery</a></li>
+              <li><a class="dropdown-link" href="pages/contact.html">Contact Us</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-trigger" aria-expanded="false" aria-controls="menu-member">
+              Member Portal
+              <span class="chevron" aria-hidden="true">&#9662;</span>
+            </button>
+            <ul class="dropdown-menu" id="menu-member">
+              <li><a class="dropdown-link" href="pages/dashboard.html">Student Dashboard</a></li>
+              <li><a class="dropdown-link" href="pages/profile.html">My Profile</a></li>
+              <li><a class="dropdown-link" href="pages/login.html">Member Login</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item nav-cta-wrap">
+            <a class="btn btn-primary btn-sm" href="pages/login.html">Portal Login</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Section & Live Hackathon Countdown -->
+    <section class="hero-section" aria-labelledby="hero-heading">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow-badge">Nexus Computing Society &bull; Fall 2026</span>
+          <h1 class="hero-title" id="hero-heading">Where Campus Coders &amp; Innovators Converge</h1>
+          <p class="hero-tagline">
+            Empowering university builders across six specialized technical wings through hands-on workshops, open-source sprints, competitive programming, and flagship annual hackathons.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="pages/directory.html">Explore Societies</a>
+            <a class="btn btn-secondary" href="pages/join-society.html">Join a Wing</a>
+          </div>
+          <div class="hero-meta">
+            <span>Open to all CS, SE &amp; Engineering undergraduates</span>
+            <span class="meta-dot" aria-hidden="true">&bull;</span>
+            <a class="inline-accent-link" href="pages/membership-status.html">Check Membership Status</a>
+          </div>
+        </div>
+
+        <!-- Featured Event Card: Nexus CodeRush 2026 Hackathon -->
+        <article class="countdown-card" aria-labelledby="coderush-title">
+          <div class="card-top-bar">
+            <span class="tag-accent">Featured Hackathon</span>
+            <span class="event-date-pill">Dec 12, 2026</span>
+          </div>
+          <h2 class="countdown-title" id="coderush-title">Nexus CodeRush 2026 Hackathon</h2>
+          <p class="countdown-desc">
+            36 hours of rapid prototyping, industry mentorship, and live demos at the Main Auditorium. Compete across AI Systems, FinTech, and Campus Sustainability tracks.
+          </p>
+
+          <div class="countdown-wrapper" aria-label="Countdown to Nexus CodeRush 2026 Hackathon">
+            <div class="countdown-grid" id="hackathon-countdown" role="timer" aria-live="off">
+              <div class="time-unit">
+                <span class="time-value" id="cd-days">00</span>
+                <span class="time-label">Days</span>
+              </div>
+              <div class="time-unit">
+                <span class="time-value" id="cd-hours">00</span>
+                <span class="time-label">Hours</span>
+              </div>
+              <div class="time-unit">
+                <span class="time-value" id="cd-minutes">00</span>
+                <span class="time-label">Minutes</span>
+              </div>
+              <div class="time-unit">
+                <span class="time-value" id="cd-seconds">00</span>
+                <span class="time-label">Seconds</span>
+              </div>
+            </div>
+            <p class="countdown-status" id="countdown-status">Kickoff: December 12, 2026 at 09:00 AM</p>
+          </div>
+
+          <div class="countdown-footer">
+            <a class="btn btn-primary btn-block" href="pages/event-register.html">Register for CodeRush 2026</a>
+            <a class="btn-text-link" href="pages/event-details.html">View Schedule &amp; Rules</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Society Highlights (4 Stat Cards) -->
+    <section class="stats-section" aria-labelledby="stats-heading">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="section-kicker">Society Impact</span>
+            <h2 class="section-title" id="stats-heading">Built by Students, Driven by Craft</h2>
+          </div>
+          <p class="section-subtitle">
+            Measured across active semester cohorts, technical mentorship circles, and campus-wide builds.
+          </p>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <p class="stat-number">825+</p>
+            <h3 class="stat-label">Active Members</h3>
+            <p class="stat-note">Cross-faculty coders, designers, and researchers collaborating every week.</p>
+          </article>
+
+          <article class="stat-card">
+            <p class="stat-number">6</p>
+            <h3 class="stat-label">Technical Wings</h3>
+            <p class="stat-note">Dedicated chapters covering AI, Security, Algorithms, Web, Cloud, and Robotics.</p>
+          </article>
+
+          <article class="stat-card">
+            <p class="stat-number">4</p>
+            <h3 class="stat-label">Annual Hackathons</h3>
+            <p class="stat-note">Flagship 24- to 36-hour engineering sprints judged by industry alumni.</p>
+          </article>
+
+          <article class="stat-card">
+            <p class="stat-number">48+</p>
+            <h3 class="stat-label">Workshops</h3>
+            <p class="stat-note">Hands-on bootcamps, code reviews, and technical interview prep clinics.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Technical Wings (Dynamically Rendered from JS Array) -->
+    <section class="wings-section" aria-labelledby="wings-heading">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="section-kicker">Featured Technical Wings</span>
+            <h2 class="section-title" id="wings-heading">Find Your Engineering Track</h2>
+          </div>
+          <a class="btn btn-secondary btn-sm" href="pages/directory.html">View All 6 Wings</a>
+        </div>
+
+        <div class="wings-grid" id="featured-wings-grid" aria-live="polite">
+          <noscript>
+            <p class="noscript-note">Enable JavaScript to load featured technical wings, or visit the <a href="pages/directory.html">Society Directory</a>.</p>
+          </noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- Upcoming Events Preview (2 Cards) -->
+    <section class="events-section" aria-labelledby="events-heading">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="section-kicker">Campus Calendar</span>
+            <h2 class="section-title" id="events-heading">Upcoming Events</h2>
+          </div>
+          <a class="btn btn-secondary btn-sm" href="pages/events.html">Full Events Calendar</a>
+        </div>
+
+        <div class="events-grid">
+          <article class="event-card">
+            <div class="event-card-head">
+              <span class="tag-accent">Workshop</span>
+              <time class="event-meta-date" datetime="2026-12-03">Dec 03, 2026 &bull; 4:00 PM</time>
+            </div>
+            <h3 class="event-card-title">Applied LLM Agents &amp; RAG Pipelines</h3>
+            <p class="event-card-desc">
+              A practical lab by the AI &amp; ML Wing covering vector indexing, structured tool calling, and local evaluation workflows. Bring your laptop.
+            </p>
+            <div class="event-card-meta">
+              <span>CS Block &bull; Lab 204</span>
+              <span>60 Seats</span>
+            </div>
+            <div class="event-card-actions">
+              <a class="btn btn-primary btn-sm" href="pages/events.html">Explore Event</a>
+              <a class="btn btn-secondary btn-sm" href="pages/event-register.html">Reserve Seat</a>
+            </div>
+          </article>
+
+          <article class="event-card">
+            <div class="event-card-head">
+              <span class="tag-accent">Competition</span>
+              <time class="event-meta-date" datetime="2026-12-07">Dec 07, 2026 &bull; 2:00 PM</time>
+            </div>
+            <h3 class="event-card-title">Winter CTF &amp; Binary Exploitation Sprint</h3>
+            <p class="event-card-desc">
+              Team-based Jeopardy-style Capture The Flag hosted by the Cyber Security Wing featuring web security, cryptography, and reverse engineering challenges.
+            </p>
+            <div class="event-card-meta">
+              <span>Innovation Hub &bull; Room 101</span>
+              <span>Teams of 2-3</span>
+            </div>
+            <div class="event-card-actions">
+              <a class="btn btn-primary btn-sm" href="pages/events.html">Explore Event</a>
+              <a class="btn btn-secondary btn-sm" href="pages/event-details.html">Challenge Rules</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Call-to-Action Strip -->
+    <section class="cta-strip" aria-labelledby="cta-heading">
+      <div class="container cta-strip-inner">
+        <div>
+          <h2 class="cta-title" id="cta-heading">Ready to ship your next campus project?</h2>
+          <p class="cta-subtitle">Sign in to manage your societies, track event check-ins, or browse highlights from past builds.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="pages/dashboard.html">Open Student Dashboard</a>
+          <a class="btn btn-secondary" href="pages/gallery.html">Browse Event Gallery</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Matching Society Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-col">
+        <a class="brand footer-brand" href="index.html">
+          <img class="brand-logo" src="images/logo.png" alt="Nexus Computing Society Logo" width="44" height="44">
+          <span class="brand-text">
+            <span class="brand-name">Nexus Computing Society</span>
+            <span class="brand-sub">Department of Computing</span>
+          </span>
+        </a>
+        <p class="footer-about">
+          The central student computing portal connecting technical wings, engineering workshops, and campus hackathons.
+        </p>
+        <div class="footer-badges">
+          <span class="footer-pill">Est. 2019</span>
+          <span class="footer-pill">6 Technical Wings</span>
+        </div>
+      </div>
+
+      <div class="footer-links-col">
+        <h3 class="footer-heading">Societies</h3>
+        <ul class="footer-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="pages/directory.html">Society Directory</a></li>
+          <li><a href="pages/society-details.html">Society Details</a></li>
+          <li><a href="pages/join-society.html">Join a Wing</a></li>
+          <li><a href="pages/my-societies.html">My Societies</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h3 class="footer-heading">Events &amp; Media</h3>
+        <ul class="footer-list">
+          <li><a href="pages/events.html">Upcoming Events</a></li>
+          <li><a href="pages/event-details.html">Event Details</a></li>
+          <li><a href="pages/event-register.html">Event Registration</a></li>
+          <li><a href="pages/announcements.html">Announcements</a></li>
+          <li><a href="pages/gallery.html">Photo Gallery</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h3 class="footer-heading">Member Portal</h3>
+        <ul class="footer-list">
+          <li><a href="pages/login.html">Member Login</a></li>
+          <li><a href="pages/dashboard.html">Dashboard</a></li>
+          <li><a href="pages/profile.html">Student Profile</a></li>
+          <li><a href="pages/membership-status.html">Membership Status</a></li>
+          <li><a href="pages/contact.html">Contact &amp; Support</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Nexus Computing Society. All rights reserved.</p>
+      <p>Built with pure HTML5, CSS3 &amp; Vanilla JS &bull; Room CS-112, University Campus</p>
+    </div>
+  </footer>
+</body>
+</html>
