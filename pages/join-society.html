@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Apply for membership at Nexus Computing Society (NCS), FAST-NUCES. Choose your technical wings, role preference, and calculate semester dues.">
+  <title>Join a Society | Nexus Computing Society</title>
+  <link rel="stylesheet" href="../css/membership.css">
+</head>
+<body>
+  <!-- Sticky Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="Nexus Computing Society Home">
+        <img
+          src="../images/logo.png"
+          alt="Nexus Computing Society Logo"
+          class="brand-logo"
+          width="40"
+          height="40"
+          onerror="this.onerror=null;this.src='../images/logo.jpg';"
+        >
+        <div class="brand-text">
+          <span class="brand-name">Nexus Computing Society</span>
+          <span class="brand-sub">FAST-NUCES Islamabad</span>
+        </div>
+      </a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="navToggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="primaryNav"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <nav class="primary-nav" id="primaryNav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="wings.html" class="nav-link">Technical Wings</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="projects.html" class="nav-link">Projects</a></li>
+          <li><a href="membership-status.html" class="nav-link">Track Status</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><a href="join-society.html" class="nav-link nav-cta active" aria-current="page">Join Society</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Hero / Page Header Section -->
+    <section class="page-hero">
+      <div class="container">
+        <span class="hero-badge">Fall / Spring 2026 Recruitment</span>
+        <h1 class="hero-title">Join Nexus Computing Society</h1>
+        <p class="hero-subtitle">
+          Become part of FAST-NUCES's premier student-led computing community. Select up to two technical wings, pick your role, and submit your membership application.
+        </p>
+      </div>
+    </section>
+
+    <!-- Application Form + Live Fee Calculator Section -->
+    <section class="application-section" aria-labelledby="application-heading">
+      <div class="container application-grid">
+        <!-- Left Column: Membership Application Form -->
+        <div class="form-column">
+          <div class="card form-card">
+            <div class="card-header">
+              <h2 id="application-heading" class="section-title">Membership Application</h2>
+              <p class="section-desc">All fields marked with <span class="required-star" aria-hidden="true">*</span> are required unless noted as optional.</p>
+            </div>
+
+            <!-- Success Confirmation Box (hidden until valid submission) -->
+            <div
+              id="confirmationBox"
+              class="confirmation-box"
+              role="status"
+              aria-live="polite"
+              hidden
+            >
+              <div class="confirmation-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <div class="confirmation-body">
+                <h3 class="confirmation-title">Application Submitted Successfully!</h3>
+                <p class="confirmation-text">
+                  Your membership application has been recorded. Save your tracking ID below to check your review status anytime.
+                </p>
+                <div class="tracking-pill">
+                  <span class="tracking-label">Tracking ID:</span>
+                  <strong id="generatedTrackingId" class="tracking-code">APP-2026-000</strong>
+                </div>
+                <div class="confirmation-actions">
+                  <a href="membership-status.html" class="btn btn-primary">
+                    Check Membership Status
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                  <button type="button" id="submitAnotherBtn" class="btn btn-outline">
+                    Submit Another Application
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <form id="membershipForm" class="membership-form" novalidate>
+              <!-- Personal & Academic Details -->
+              <div class="form-row two-col">
+                <div class="form-group">
+                  <label for="fullName" class="form-label">
+                    Full Name <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    class="form-input"
+                    placeholder="e.g. Ayesha Khan"
+                    autocomplete="name"
+                    required
+                  >
+                  <p class="error-message" id="fullNameError" role="alert"></p>
+                </div>
+
+                <div class="form-group">
+                  <label for="rollNumber" class="form-label">
+                    Roll Number <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="rollNumber"
+                    name="rollNumber"
+                    class="form-input"
+                    placeholder="e.g. 24I-0123"
+                    pattern="^[0-9]{2}[iI]-[0-9]{4}$"
+                    required
+                  >
+                  <span class="field-hint">Format: XXI-XXXX (e.g. 23i-0456)</span>
+                  <p class="error-message" id="rollNumberError" role="alert"></p>
+                </div>
+              </div>
+
+              <div class="form-row two-col">
+                <div class="form-group">
+                  <label for="nuEmail" class="form-label">
+                    NU Email <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="nuEmail"
+                    name="nuEmail"
+                    class="form-input"
+                    placeholder="e.g. i240123@nu.edu.pk"
+                    autocomplete="email"
+                    required
+                  >
+                  <span class="field-hint">Must end with @nu.edu.pk or @isb.nu.edu.pk</span>
+                  <p class="error-message" id="nuEmailError" role="alert"></p>
+                </div>
+
+                <div class="form-group">
+                  <label for="githubUrl" class="form-label">
+                    GitHub Profile URL <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    type="url"
+                    id="githubUrl"
+                    name="githubUrl"
+                    class="form-input"
+                    placeholder="https://github.com/username"
+                    required
+                  >
+                  <span class="field-hint">Example: https://github.com/octocat</span>
+                  <p class="error-message" id="githubUrlError" role="alert"></p>
+                </div>
+              </div>
+
+              <!-- Wing Preferences -->
+              <div class="form-row two-col">
+                <div class="form-group">
+                  <label for="primaryWing" class="form-label">
+                    1st Preferred Technical Wing <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <select id="primaryWing" name="primaryWing" class="form-select" required>
+                    <option value="">-- Select 1st Wing --</option>
+                    <option value="AI & ML">AI &amp; ML</option>
+                    <option value="Competitive Programming">Competitive Programming</option>
+                    <option value="Cyber Security">Cyber Security</option>
+                    <option value="Web & App Dev">Web &amp; App Dev</option>
+                    <option value="Game Dev">Game Dev</option>
+                    <option value="Robotics & IoT">Robotics &amp; IoT</option>
+                  </select>
+                  <p class="error-message" id="primaryWingError" role="alert"></p>
+                </div>
+
+                <div class="form-group">
+                  <label for="secondaryWing" class="form-label">
+                    2nd Preferred Wing <span class="optional-tag">(Optional, +Rs 200)</span>
+                  </label>
+                  <select id="secondaryWing" name="secondaryWing" class="form-select">
+                    <option value="">None (Single Wing)</option>
+                    <option value="AI & ML">AI &amp; ML</option>
+                    <option value="Competitive Programming">Competitive Programming</option>
+                    <option value="Cyber Security">Cyber Security</option>
+                    <option value="Web & App Dev">Web &amp; App Dev</option>
+                    <option value="Game Dev">Game Dev</option>
+                    <option value="Robotics & IoT">Robotics &amp; IoT</option>
+                  </select>
+                  <span class="field-hint">Must be different from your 1st wing</span>
+                  <p class="error-message" id="secondaryWingError" role="alert"></p>
+                </div>
+              </div>
+
+              <!-- Role Preference Radio Cards -->
+              <div class="form-group">
+                <span class="form-label" id="roleGroupLabel">
+                  Role Preference <span class="required-star" aria-hidden="true">*</span>
+                </span>
+                <div class="role-grid" role="radiogroup" aria-labelledby="roleGroupLabel">
+                  <label class="role-card" for="roleGeneral">
+                    <input
+                      type="radio"
+                      id="roleGeneral"
+                      name="rolePreference"
+                      value="General Member"
+                      class="role-radio"
+                      checked
+                    >
+                    <div class="role-card-content">
+                      <div class="role-card-top">
+                        <span class="role-name">General Member</span>
+                        <span class="role-price">Rs 500</span>
+                      </div>
+                      <p class="role-desc">Attend all workshops, hackathons, and networking sessions.</p>
+                    </div>
+                  </label>
+
+                  <label class="role-card" for="roleTechnical">
+                    <input
+                      type="radio"
+                      id="roleTechnical"
+                      name="rolePreference"
+                      value="Technical Team"
+                      class="role-radio"
+                    >
+                    <div class="role-card-content">
+                      <div class="role-card-top">
+                        <span class="role-name">Technical Team</span>
+                        <span class="role-price">Rs 300</span>
+                      </div>
+                      <p class="role-desc">Build society projects, mentor juniors, and lead wing labs.</p>
+                    </div>
+                  </label>
+
+                  <label class="role-card" for="roleEvent">
+                    <input
+                      type="radio"
+                      id="roleEvent"
+                      name="rolePreference"
+                      value="Event Management"
+                      class="role-radio"
+                    >
+                    <div class="role-card-content">
+                      <div class="role-card-top">
+                        <span class="role-name">Event Management</span>
+                        <span class="role-price">Rs 400</span>
+                      </div>
+                      <p class="role-desc">Organize coding competitions, tech talks, and campus fests.</p>
+                    </div>
+                  </label>
+
+                  <label class="role-card" for="roleMedia">
+                    <input
+                      type="radio"
+                      id="roleMedia"
+                      name="rolePreference"
+                      value="Media & Design"
+                      class="role-radio"
+                    >
+                    <div class="role-card-content">
+                      <div class="role-card-top">
+                        <span class="role-name">Media &amp; Design</span>
+                        <span class="role-price">Rs 400</span>
+                      </div>
+                      <p class="role-desc">Craft visual branding, posters, photography, and social reels.</p>
+                    </div>
+                  </label>
+                </div>
+                <p class="error-message" id="rolePreferenceError" role="alert"></p>
+              </div>
+
+              <!-- Motivation Textarea -->
+              <div class="form-group">
+                <div class="label-row">
+                  <label for="motivation" class="form-label">
+                    Motivation <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <span id="motivationCount" class="char-count">0 / 20 min chars</span>
+                </div>
+                <textarea
+                  id="motivation"
+                  name="motivation"
+                  class="form-textarea"
+                  rows="4"
+                  placeholder="Tell us why you want to join Nexus Computing Society and what you hope to learn or contribute (minimum 20 characters)..."
+                  required
+                ></textarea>
+                <p class="error-message" id="motivationError" role="alert"></p>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" id="submitBtn" class="btn btn-primary btn-lg">
+                  Submit Application
+                </button>
+                <button type="reset" id="resetBtn" class="btn btn-ghost">
+                  Clear Form
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right Column: Live Semester Fee & Perks Calculator -->
+        <aside class="calculator-column" aria-labelledby="calculator-heading">
+          <div class="card calculator-card" aria-live="polite">
+            <div class="calc-header">
+              <span class="calc-badge">Live Estimate</span>
+              <h2 id="calculator-heading" class="section-title">Semester Fee &amp; Perks</h2>
+              <p class="section-desc">Updates automatically as you customize your role and wings.</p>
+            </div>
+
+            <!-- Early-Bird Discount Toggle -->
+            <div class="discount-toggle-box">
+              <label for="earlyBirdToggle" class="toggle-label">
+                <div class="toggle-text">
+                  <span class="toggle-title">Early-Bird Student Discount</span>
+                  <span class="toggle-sub">Save 20% on total semester dues</span>
+                </div>
+                <div class="switch-wrap">
+                  <input type="checkbox" id="earlyBirdToggle" class="switch-input">
+                  <span class="switch-slider" aria-hidden="true"></span>
+                </div>
+              </label>
+            </div>
+
+            <!-- Itemized Breakdown -->
+            <div class="fee-breakdown">
+              <div class="fee-row">
+                <span class="fee-label">Role: <strong id="calcRoleLabel">General Member</strong></span>
+                <span class="fee-amount" id="calcBaseFee">Rs 500</span>
+              </div>
+              <div class="fee-row">
+                <span class="fee-label">2nd Wing Add-on (<span id="calcWingLabel">None</span>)</span>
+                <span class="fee-amount" id="calcWingFee">Rs 0</span>
+              </div>
+              <div class="fee-row discount-row" id="calcDiscountRow" hidden>
+                <span class="fee-label">Early-Bird Discount (20%)</span>
+                <span class="fee-amount discount-amount" id="calcDiscountAmount">-Rs 0</span>
+              </div>
+              <div class="fee-divider"></div>
+              <div class="fee-total-row">
+                <span class="fee-total-label">Total Semester Dues</span>
+                <span class="fee-total-amount" id="calcTotalFee">Rs 500</span>
+              </div>
+            </div>
+
+            <!-- Dynamic Perks List -->
+            <div class="perks-section">
+              <h3 class="perks-title">Included Membership Perks</h3>
+              <ul id="perksList" class="perks-list">
+                <!-- Populated by js/membership.js -->
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Recent Submissions Section (localStorage persistence) -->
+    <section class="submissions-section" aria-labelledby="submissions-heading">
+      <div class="container">
+        <div class="submissions-header">
+          <div>
+            <h2 id="submissions-heading" class="section-title">Recent Submissions</h2>
+            <p class="section-desc">Applications saved in this browser persist across reloads.</p>
+          </div>
+          <a href="membership-status.html" class="btn btn-outline btn-sm">
+            Go to Status Tracker
+          </a>
+        </div>
+
+        <div id="recentSubmissionsList" class="submissions-grid" aria-live="polite">
+          <!-- Populated by js/membership.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Matching Society Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand footer-brand-link">
+          <img
+            src="../images/logo.png"
+            alt="Nexus Computing Society Logo"
+            class="brand-logo"
+            width="36"
+            height="36"
+            onerror="this.onerror=null;this.src='../images/logo.jpg';"
+          >
+          <span class="brand-name">Nexus Computing Society</span>
+        </a>
+        <p class="footer-desc">
+          Empowering FAST-NUCES students through hands-on engineering, competitive programming, research, and collaborative tech leadership.
+        </p>
+      </div>
+
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Portal</h3>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="wings.html">Technical Wings</a></li>
+          <li><a href="events.html">Events Calendar</a></li>
+          <li><a href="projects.html">Student Projects</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Membership</h3>
+        <ul class="footer-links">
+          <li><a href="join-society.html">Join a Society</a></li>
+          <li><a href="membership-status.html">Membership Status</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Campus</h3>
+        <p class="footer-meta">FAST-NUCES, A.K. Brohi Road, H-11/4, Islamabad</p>
+        <p class="footer-meta">Email: nexus@isb.nu.edu.pk</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2026 Nexus Computing Society. All rights reserved.</p>
+        <p>Built by SE-D Group 09</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/membership.js"></script>
+</body>
+</html>
