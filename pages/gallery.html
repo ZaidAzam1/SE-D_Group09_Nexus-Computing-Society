@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore event highlights, hackathons, technical workshops, and campus showcases from the Nexus Computing Society.">
+  <title>Gallery | Nexus Computing Society</title>
+  <link rel="stylesheet" href="../css/campus-info.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand-link" href="../index.html">
+        <img
+          src="../images/logo.png"
+          alt="Nexus Computing Society Logo"
+          class="brand-logo"
+          width="44"
+          height="44"
+        >
+        <span class="brand-text">
+          <span class="brand-title">Nexus Computing Society</span>
+          <span class="brand-subtitle">University Portal</span>
+        </span>
+      </a>
+
+      <button
+        type="button"
+        id="nav-toggle"
+        class="nav-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+      >
+        <span class="nav-toggle-icon" aria-hidden="true">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </span>
+      </button>
+
+      <nav id="primary-navigation" class="primary-nav" aria-label="Primary portal navigation">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="../index.html">Home</a></li>
+          <li><a class="nav-link" href="about.html">About</a></li>
+          <li><a class="nav-link" href="events.html">Events</a></li>
+          <li><a class="nav-link" href="workshops.html">Workshops</a></li>
+          <li><a class="nav-link" href="hackathons.html">Hackathons</a></li>
+          <li><a class="nav-link" href="projects.html">Projects</a></li>
+          <li><a class="nav-link" href="resources.html">Resources</a></li>
+          <li><a class="nav-link" href="gallery.html" aria-current="page">Gallery</a></li>
+          <li><a class="nav-link" href="team.html">Executive Team</a></li>
+          <li><a class="nav-link" href="membership.html">Membership</a></li>
+          <li><a class="nav-link" href="faq.html">FAQ</a></li>
+          <li><a class="nav-link" href="contact.html">Contact</a></li>
+          <li><a class="nav-link" href="announcements.html">Announcements</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-main">
+    <div class="container">
+      <section class="page-hero" aria-labelledby="gallery-heading">
+        <div>
+          <p class="hero-eyebrow">
+            <span class="hero-dot" aria-hidden="true"></span>
+            Campus Info &amp; Event Archive
+          </p>
+          <h1 id="gallery-heading" class="hero-title">Society Event Gallery</h1>
+          <p class="hero-description">
+            Relive standout moments from Nexus Computing Society hackathons, AI &amp; security bootcamps,
+            and campus-wide engineering showcases. Click any highlight to inspect it in full screen.
+          </p>
+        </div>
+
+        <div class="hero-actions">
+          <div id="favorites-counter-badge" class="unread-counter-badge" aria-live="polite">
+            <span id="favorites-count-number" class="unread-count-number">0</span>
+            <span id="favorites-count-label">Saved Highlights</span>
+          </div>
+          <a class="btn btn-outline" href="announcements.html">View Announcements</a>
+        </div>
+      </section>
+
+      <section class="controls-section" aria-label="Filter gallery by category">
+        <div class="filter-toolbar">
+          <div id="gallery-category-filters" class="category-filters" role="group" aria-label="Filter event highlights by category">
+            <button type="button" class="gallery-filter-btn is-active" data-category="All" aria-pressed="true">
+              All <span class="filter-count-pill" data-count-for="All">6</span>
+            </button>
+            <button type="button" class="gallery-filter-btn" data-category="Hackathons" aria-pressed="false">
+              Hackathons <span class="filter-count-pill" data-count-for="Hackathons">2</span>
+            </button>
+            <button type="button" class="gallery-filter-btn" data-category="Workshops" aria-pressed="false">
+              Workshops <span class="filter-count-pill" data-count-for="Workshops">2</span>
+            </button>
+            <button type="button" class="gallery-filter-btn" data-category="Team & Campus" aria-pressed="false">
+              Team &amp; Campus <span class="filter-count-pill" data-count-for="Team & Campus">2</span>
+            </button>
+          </div>
+
+          <p id="gallery-count-status" class="feed-meta-status" aria-live="polite">
+            Showing 6 of 6 highlights
+          </p>
+        </div>
+      </section>
+
+      <section class="gallery-section" aria-labelledby="gallery-grid-heading">
+        <h2 id="gallery-grid-heading" class="sr-only">Event Highlights Grid</h2>
+        <div id="gallery-grid" class="gallery-grid"></div>
+      </section>
+    </div>
+  </main>
+
+  <div
+    id="gallery-lightbox"
+    class="lightbox-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="lightbox-title"
+    aria-describedby="lightbox-caption"
+    hidden
+  >
+    <div class="lightbox-dialog">
+      <div class="lightbox-header">
+        <div class="lightbox-header-meta">
+          <span id="lightbox-category" class="gallery-category-badge"></span>
+          <span id="lightbox-attendees" class="gallery-attendee-badge"></span>
+          <span id="lightbox-position" class="lightbox-position"></span>
+        </div>
+        <button
+          type="button"
+          id="lightbox-close-btn"
+          class="lightbox-close-btn"
+          aria-label="Close lightbox"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="lightbox-stage">
+        <button
+          type="button"
+          id="lightbox-prev-btn"
+          class="lightbox-nav-btn lightbox-prev-btn"
+          aria-label="Previous highlight"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div id="lightbox-artwork" class="lightbox-artwork"></div>
+
+        <button
+          type="button"
+          id="lightbox-next-btn"
+          class="lightbox-nav-btn lightbox-next-btn"
+          aria-label="Next highlight"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <div class="lightbox-footer">
+        <div class="lightbox-copy">
+          <div class="lightbox-title-row">
+            <h2 id="lightbox-title" class="lightbox-title"></h2>
+            <time id="lightbox-date" class="lightbox-date"></time>
+          </div>
+          <p id="lightbox-caption" class="lightbox-caption"></p>
+        </div>
+
+        <div class="lightbox-actions">
+          <button
+            type="button"
+            id="lightbox-like-btn"
+            class="gallery-like-btn"
+            aria-pressed="false"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span class="like-btn-label">Bookmark</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand-link" href="../index.html">
+            <img
+              src="../images/logo.png"
+              alt="Nexus Computing Society Logo"
+              class="brand-logo"
+              width="40"
+              height="40"
+            >
+            <span class="brand-text">
+              <span class="brand-title">Nexus Computing Society</span>
+              <span class="brand-subtitle">Department of Software Engineering</span>
+            </span>
+          </a>
+          <p class="footer-description">
+            Connecting student developers, researchers, and builders through hackathons,
+            technical workshops, and collaborative campus initiatives.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">Portal Pages</h2>
+          <ul class="footer-links">
+            <li><a class="footer-link" href="../index.html">Home</a></li>
+            <li><a class="footer-link" href="about.html">About</a></li>
+            <li><a class="footer-link" href="events.html">Events</a></li>
+            <li><a class="footer-link" href="workshops.html">Workshops</a></li>
+            <li><a class="footer-link" href="hackathons.html">Hackathons</a></li>
+            <li><a class="footer-link" href="projects.html">Projects</a></li>
+            <li><a class="footer-link" href="resources.html">Resources</a></li>
+            <li><a class="footer-link" href="gallery.html">Gallery</a></li>
+            <li><a class="footer-link" href="team.html">Executive Team</a></li>
+            <li><a class="footer-link" href="membership.html">Membership</a></li>
+            <li><a class="footer-link" href="faq.html">FAQ</a></li>
+            <li><a class="footer-link" href="contact.html">Contact</a></li>
+            <li><a class="footer-link" href="announcements.html">Announcements</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">Society Desk</h2>
+          <ul class="footer-meta-list">
+            <li>Computing Innovation Lab, Block C (Room 304)</li>
+            <li>Office Hours: Mon–Fri, 10:00 AM – 4:00 PM</li>
+            <li><a class="footer-link" href="events.html">Upcoming Campus Events</a></li>
+            <li><a class="footer-link" href="contact.html">Submit a Notice Request</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nexus Computing Society. All rights reserved.</p>
+        <p>Page 14 &middot; Campus Info &amp; Event Gallery</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/campus-info.js"></script>
+</body>
+</html>
