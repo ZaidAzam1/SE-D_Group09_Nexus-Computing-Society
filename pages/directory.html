@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore all six technical wings of the Nexus Computing Society — filter by domain, search tech stacks, view lab schedules, and join a campus chapter.">
+  <title>Society Directory | Nexus Computing Society</title>
+  <link rel="stylesheet" href="../css/home-directory.css">
+  <script src="../js/home-directory.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Live Announcement Banner -->
+  <div class="announcement-banner" role="region" aria-label="Latest society announcement">
+    <div class="container announcement-inner">
+      <div class="announcement-content">
+        <span class="badge-live">LIVE ALERT</span>
+        <p class="announcement-text">
+          <strong>Nexus CodeRush 2026</strong> team registrations are now open — submit your 4-member roster before December 8.
+        </p>
+      </div>
+      <a class="announcement-link" href="announcements.html">
+        Read Announcements
+        <span aria-hidden="true">-&gt;</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Sticky Header & Accessible Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="Nexus Computing Society Home">
+        <img class="brand-logo" src="../images/logo.png" alt="Nexus Computing Society Logo" width="48" height="48">
+        <span class="brand-text">
+          <span class="brand-name">Nexus Computing Society</span>
+          <span class="brand-sub">University Tech Portal</span>
+        </span>
+      </a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-controls="primary-navigation"
+        aria-expanded="false"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-box" aria-hidden="true">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </span>
+        <span class="nav-toggle-label">Menu</span>
+      </button>
+
+      <nav class="primary-nav" id="primary-navigation" aria-label="Primary portal navigation">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html">Home</a>
+          </li>
+
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-trigger is-active" aria-expanded="false" aria-controls="menu-societies">
+              Societies
+              <span class="chevron" aria-hidden="true">&#9662;</span>
+            </button>
+            <ul class="dropdown-menu" id="menu-societies">
+              <li><a class="dropdown-link is-active" href="directory.html" aria-current="page">Society Directory</a></li>
+              <li><a class="dropdown-link" href="society-details.html">Society Details</a></li>
+              <li><a class="dropdown-link" href="join-society.html">Join a Wing</a></li>
+              <li><a class="dropdown-link" href="my-societies.html">My Societies</a></li>
+              <li><a class="dropdown-link" href="membership-status.html">Membership Status</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-trigger" aria-expanded="false" aria-controls="menu-events">
+              Events
+              <span class="chevron" aria-hidden="true">&#9662;</span>
+            </button>
+            <ul class="dropdown-menu" id="menu-events">
+              <li><a class="dropdown-link" href="events.html">Events Calendar</a></li>
+              <li><a class="dropdown-link" href="event-details.html">Event Details</a></li>
+              <li><a class="dropdown-link" href="event-register.html">Event Registration</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-trigger" aria-expanded="false" aria-controls="menu-community">
+              Community
+              <span class="chevron" aria-hidden="true">&#9662;</span>
+            </button>
+            <ul class="dropdown-menu" id="menu-community">
+              <li><a class="dropdown-link" href="announcements.html">Announcements</a></li>
+              <li><a class="dropdown-link" href="gallery.html">Media Gallery</a></li>
+              <li><a class="dropdown-link" href="contact.html">Contact Us</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-dropdown">
+            <button type="button" class="nav-link dropdown-trigger" aria-expanded="false" aria-controls="menu-member">
+              Member Portal
+              <span class="chevron" aria-hidden="true">&#9662;</span>
+            </button>
+            <ul class="dropdown-menu" id="menu-member">
+              <li><a class="dropdown-link" href="dashboard.html">Student Dashboard</a></li>
+              <li><a class="dropdown-link" href="profile.html">My Profile</a></li>
+              <li><a class="dropdown-link" href="login.html">Member Login</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item nav-cta-wrap">
+            <a class="btn btn-primary btn-sm" href="login.html">Portal Login</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Directory Page Header -->
+    <section class="directory-hero" aria-labelledby="directory-heading">
+      <div class="container directory-hero-inner">
+        <div class="directory-hero-copy">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">Home</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Society Directory</span>
+          </nav>
+          <span class="eyebrow-badge">All 6 Technical Wings &bull; Fall 2026</span>
+          <h1 class="directory-title" id="directory-heading">Society Directory</h1>
+          <p class="directory-subtitle">
+            Browse every specialized engineering chapter inside the Nexus Computing Society. Search by wing name, focus tagline, or technology stack to find your weekly lab.
+          </p>
+        </div>
+
+        <div class="directory-hero-card">
+          <p class="directory-hero-card-label">Open Enrollment</p>
+          <h2 class="directory-hero-card-title">Ready to join a technical wing?</h2>
+          <p class="directory-hero-card-text">
+            New cohorts welcome students from Computer Science, Software Engineering, AI, and Electrical Engineering.
+          </p>
+          <a class="btn btn-primary btn-block" href="join-society.html">Apply to Join a Wing</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search, Domain Category Filters & Live Summary Counter -->
+    <section class="directory-controls-section" aria-label="Filter and search technical wings">
+      <div class="container">
+        <div class="directory-toolbar">
+          <div class="search-field-group">
+            <label class="search-label" for="wing-search-input">Search Wings, Taglines, or Tech Stack</label>
+            <div class="search-input-wrap">
+              <span class="search-icon" aria-hidden="true">&#128269;</span>
+              <input
+                type="search"
+                id="wing-search-input"
+                class="search-input"
+                placeholder="Try 'PyTorch', 'CTF', 'C++', 'React', 'Unity', or 'ROS2'..."
+                autocomplete="off"
+              >
+            </div>
+          </div>
+
+          <div class="directory-summary" id="directory-summary" role="status" aria-live="polite">
+            <div class="summary-stat">
+              <span class="summary-value" id="matching-wings-count">6</span>
+              <span class="summary-label">Matching Wings</span>
+            </div>
+            <div class="summary-divider" aria-hidden="true"></div>
+            <div class="summary-stat">
+              <span class="summary-value" id="matching-members-count">835</span>
+              <span class="summary-label">Combined Active Members</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="category-filter-bar">
+          <span class="filter-bar-label" id="category-filter-label">Filter by Domain:</span>
+          <div class="category-pills" id="category-filter-pills" role="group" aria-labelledby="category-filter-label">
+            <!-- Dynamically populated category pills -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dynamic Technical Wings Grid & Empty State -->
+    <section class="directory-grid-section" aria-labelledby="directory-results-heading">
+      <div class="container">
+        <h2 class="sr-only" id="directory-results-heading">Technical Wings List</h2>
+
+        <div class="directory-wings-grid" id="directory-wings-grid" aria-live="polite">
+          <noscript>
+            <p class="noscript-note">Enable JavaScript to browse, search, and filter the six Nexus Computing Society technical wings.</p>
+          </noscript>
+        </div>
+
+        <div class="directory-empty-state" id="directory-empty-state" hidden>
+          <span class="empty-state-badge">No Matches Found</span>
+          <h3 class="empty-state-title">No technical wings match your current filters</h3>
+          <p class="empty-state-desc" id="empty-state-desc">
+            Try clearing your search keyword or switching back to all domain categories.
+          </p>
+          <button type="button" class="btn btn-primary" id="reset-filters-btn">Reset Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Call-to-Action Strip -->
+    <section class="cta-strip" aria-labelledby="directory-cta-heading">
+      <div class="container cta-strip-inner">
+        <div>
+          <h2 class="cta-title" id="directory-cta-heading">Unsure which wing fits your schedule?</h2>
+          <p class="cta-subtitle">Check your current wing enrollments or submit a direct inquiry to our student wing leads.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="join-society.html">Join a Wing</a>
+          <a class="btn btn-secondary" href="my-societies.html">View My Societies</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Matching Society Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-col">
+        <a class="brand footer-brand" href="../index.html">
+          <img class="brand-logo" src="../images/logo.png" alt="Nexus Computing Society Logo" width="44" height="44">
+          <span class="brand-text">
+            <span class="brand-name">Nexus Computing Society</span>
+            <span class="brand-sub">Department of Computing</span>
+          </span>
+        </a>
+        <p class="footer-about">
+          The central student computing portal connecting technical wings, engineering workshops, and campus hackathons.
+        </p>
+        <div class="footer-badges">
+          <span class="footer-pill">Est. 2019</span>
+          <span class="footer-pill">6 Technical Wings</span>
+        </div>
+      </div>
+
+      <div class="footer-links-col">
+        <h3 class="footer-heading">Societies</h3>
+        <ul class="footer-list">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="directory.html">Society Directory</a></li>
+          <li><a href="society-details.html">Society Details</a></li>
+          <li><a href="join-society.html">Join a Wing</a></li>
+          <li><a href="my-societies.html">My Societies</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h3 class="footer-heading">Events &amp; Media</h3>
+        <ul class="footer-list">
+          <li><a href="events.html">Upcoming Events</a></li>
+          <li><a href="event-details.html">Event Details</a></li>
+          <li><a href="event-register.html">Event Registration</a></li>
+          <li><a href="announcements.html">Announcements</a></li>
+          <li><a href="gallery.html">Photo Gallery</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h3 class="footer-heading">Member Portal</h3>
+        <ul class="footer-list">
+          <li><a href="login.html">Member Login</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="profile.html">Student Profile</a></li>
+          <li><a href="membership-status.html">Membership Status</a></li>
+          <li><a href="contact.html">Contact &amp; Support</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Nexus Computing Society. All rights reserved.</p>
+      <p>Built with pure HTML5, CSS3 &amp; Vanilla JS &bull; Room CS-112, University Campus</p>
+    </div>
+  </footer>
+</body>
+</html>

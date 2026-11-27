@@ -278,3 +278,317 @@
     renderFeaturedWings();
   });
 })();
+
+
+/* ==========================================================================
+   Page 2: Society Directory Vanilla JavaScript
+   Features:
+   4. Dynamic Technical Wings Array (All 6 Wings)
+   5. Live Search, Domain Category Filter Pills & Live Member Counter
+   6. Wing Selection Persistence (localStorage: ncs_selected_wing)
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  var SELECTED_WING_STORAGE_KEY = "ncs_selected_wing";
+
+  var TECHNICAL_WINGS = [
+    {
+      id: "ai-ml",
+      name: "AI & Machine Learning Wing",
+      tagline: "Deep learning, applied LLM systems, and computer vision research.",
+      category: "AI & Data Science",
+      memberCount: 210,
+      wingLead: "Ayesha Tariq (BSAI '27)",
+      schedule: "Wednesdays • 4:30 PM • AI Lab 302",
+      description:
+        "Researching neural architectures, computer vision, and applied LLM systems through weekly paper reading circles, dataset clinics, and open-source model builds.",
+      techStack: ["PyTorch", "Python", "LangChain", "OpenCV", "Hugging Face"]
+    },
+    {
+      id: "competitive-programming",
+      name: "Competitive Programming Club",
+      tagline: "Algorithmic mastery, ICPC team training, and timed coding sprints.",
+      category: "Algorithms & ICPC",
+      memberCount: 185,
+      wingLead: "Hamza Siddiqui (BSCS '26)",
+      schedule: "Fridays • 3:00 PM • CS Seminar Hall",
+      description:
+        "Sharpening algorithmic problem-solving, graph theory, and dynamic programming for regional ICPC qualifiers, Codeforces rounds, and technical coding interviews.",
+      techStack: ["C++20", "Python", "Data Structures", "Graph Theory", "ICPC"]
+    },
+    {
+      id: "cyber-security",
+      name: "Cyber Security & Ethical Hacking Wing",
+      tagline: "Offensive security, CTF challenges, and defensive network engineering.",
+      category: "Cyber Security",
+      memberCount: 160,
+      wingLead: "Zainab Qureshi (BSCY '27)",
+      schedule: "Thursdays • 5:00 PM • Security Sandbox 105",
+      description:
+        "Practicing ethical hacking, penetration testing, cryptography, and binary exploitation in isolated Capture The Flag (CTF) lab environments.",
+      techStack: ["Kali Linux", "Burp Suite", "Wireshark", "Ghidra", "Docker"]
+    },
+    {
+      id: "web-app-dev",
+      name: "Web & App Dev Studio",
+      tagline: "Full-stack web platforms, mobile apps, and scalable cloud APIs.",
+      category: "Web & Mobile Dev",
+      memberCount: 140,
+      wingLead: "Bilal Mahmood (BSSE '26)",
+      schedule: "Tuesdays • 4:00 PM • Software Studio 208",
+      description:
+        "Designing and shipping production-grade campus web applications, cross-platform mobile tools, and RESTful backend services in agile student squads.",
+      techStack: ["HTML5 / CSS3", "JavaScript", "React", "Node.js", "PostgreSQL"]
+    },
+    {
+      id: "game-dev-graphics",
+      name: "Game Dev & Graphics Guild",
+      tagline: "Real-time rendering, gameplay physics, and interactive 3D worlds.",
+      category: "Game Dev & Graphics",
+      memberCount: 75,
+      wingLead: "Raza Javed (BSCS '27)",
+      schedule: "Mondays • 4:30 PM • Multimedia Lab 114",
+      description:
+        "Building indie 2D/3D games, custom GLSL shaders, procedural level generators, and semester game jam prototypes from concept art to playable builds.",
+      techStack: ["Unity", "C#", "Unreal Engine", "Godot", "GLSL"]
+    },
+    {
+      id: "robotics-iot",
+      name: "Robotics & Embedded IoT Wing",
+      tagline: "Autonomous rovers, edge microcontrollers, and smart sensor networks.",
+      category: "Robotics & IoT",
+      memberCount: 65,
+      wingLead: "Saad Farhan (BSEE '26)",
+      schedule: "Saturdays • 11:00 AM • Robotics Makerspace B2",
+      description:
+        "Prototyping autonomous line-following bots, ROS2 navigation stacks, and low-power campus telemetry devices using custom PCBs and real-time firmware.",
+      techStack: ["C / C++", "ROS2", "ESP32", "Arduino", "MQTT"]
+    }
+  ];
+
+  function createDirectoryElement(tag, className, textContent) {
+    var el = document.createElement(tag);
+    if (className) el.className = className;
+    if (typeof textContent === "string") el.textContent = textContent;
+    return el;
+  }
+
+  function saveSelectedWing(wingId) {
+    try {
+      window.localStorage.setItem(SELECTED_WING_STORAGE_KEY, wingId);
+    } catch (err) {
+      // Ignore storage errors if localStorage is disabled
+    }
+  }
+
+  function getUniqueCategories(wings) {
+    var categories = ["All"];
+    wings.forEach(function (wing) {
+      if (categories.indexOf(wing.category) === -1) {
+        categories.push(wing.category);
+      }
+    });
+    return categories;
+  }
+
+  function initSocietyDirectory() {
+    var gridEl = document.getElementById("directory-wings-grid");
+    var searchInput = document.getElementById("wing-search-input");
+    var pillsContainer = document.getElementById("category-filter-pills");
+    var wingsCountEl = document.getElementById("matching-wings-count");
+    var membersCountEl = document.getElementById("matching-members-count");
+    var emptyStateEl = document.getElementById("directory-empty-state");
+    var emptyDescEl = document.getElementById("empty-state-desc");
+    var resetBtn = document.getElementById("reset-filters-btn");
+
+    if (!gridEl || !searchInput || !pillsContainer) {
+      return;
+    }
+
+    var state = {
+      searchQuery: "",
+      activeCategory: "All"
+    };
+
+    function renderCategoryPills() {
+      var categories = getUniqueCategories(TECHNICAL_WINGS);
+      pillsContainer.innerHTML = "";
+
+      categories.forEach(function (category) {
+        var isActive = state.activeCategory === category;
+        var label = category === "All" ? "All Wings" : category;
+        var btn = createDirectoryElement(
+          "button",
+          "category-pill" + (isActive ? " is-active" : ""),
+          label
+        );
+        btn.type = "button";
+        btn.setAttribute("data-category", category);
+        btn.setAttribute("aria-pressed", isActive ? "true" : "false");
+
+        btn.addEventListener("click", function () {
+          state.activeCategory = category;
+          renderCategoryPills();
+          renderDirectory();
+        });
+
+        pillsContainer.appendChild(btn);
+      });
+    }
+
+    function filterWings() {
+      var query = state.searchQuery.trim().toLowerCase();
+
+      return TECHNICAL_WINGS.filter(function (wing) {
+        var matchesCategory =
+          state.activeCategory === "All" || wing.category === state.activeCategory;
+
+        if (!matchesCategory) {
+          return false;
+        }
+
+        if (!query) {
+          return true;
+        }
+
+        var inName = wing.name.toLowerCase().indexOf(query) !== -1;
+        var inTagline = wing.tagline.toLowerCase().indexOf(query) !== -1;
+        var inTechStack = wing.techStack.some(function (tech) {
+          return tech.toLowerCase().indexOf(query) !== -1;
+        });
+
+        return inName || inTagline || inTechStack;
+      });
+    }
+
+    function updateSummary(filteredWings) {
+      var totalMembers = filteredWings.reduce(function (sum, wing) {
+        return sum + wing.memberCount;
+      }, 0);
+
+      if (wingsCountEl) {
+        wingsCountEl.textContent = String(filteredWings.length);
+      }
+      if (membersCountEl) {
+        membersCountEl.textContent = String(totalMembers);
+      }
+    }
+
+    function buildWingCard(wing) {
+      var card = createDirectoryElement("article", "directory-wing-card");
+      card.setAttribute("data-wing-id", wing.id);
+
+      var body = createDirectoryElement("div", "wing-card-body");
+
+      var topRow = createDirectoryElement("div", "wing-card-top");
+      topRow.appendChild(createDirectoryElement("span", "wing-badge", wing.category));
+      topRow.appendChild(createDirectoryElement("span", "wing-members", wing.memberCount + " Members"));
+      body.appendChild(topRow);
+
+      body.appendChild(createDirectoryElement("h3", "wing-title", wing.name));
+      body.appendChild(createDirectoryElement("p", "wing-tagline", wing.tagline));
+      body.appendChild(createDirectoryElement("p", "wing-desc", wing.description));
+
+      var tagsWrap = createDirectoryElement("div", "wing-tags");
+      wing.techStack.forEach(function (tech) {
+        tagsWrap.appendChild(createDirectoryElement("span", "wing-tag", tech));
+      });
+      body.appendChild(tagsWrap);
+
+      var footer = createDirectoryElement("div", "wing-card-footer");
+
+      var metaList = createDirectoryElement("div", "wing-meta-list");
+
+      var leadItem = createDirectoryElement("div", "wing-meta-item");
+      leadItem.appendChild(createDirectoryElement("span", "wing-meta-label", "Wing Lead:"));
+      leadItem.appendChild(document.createTextNode(" " + wing.wingLead));
+      metaList.appendChild(leadItem);
+
+      var scheduleItem = createDirectoryElement("div", "wing-meta-item");
+      scheduleItem.appendChild(createDirectoryElement("span", "wing-meta-label", "Weekly Lab:"));
+      scheduleItem.appendChild(document.createTextNode(" " + wing.schedule));
+      metaList.appendChild(scheduleItem);
+
+      footer.appendChild(metaList);
+
+      var actions = createDirectoryElement("div", "wing-actions");
+
+      var detailsLink = createDirectoryElement("a", "btn btn-primary btn-sm", "View Wing Details");
+      detailsLink.setAttribute("href", "society-details.html");
+      detailsLink.addEventListener("click", function () {
+        saveSelectedWing(wing.id);
+      });
+
+      var joinLink = createDirectoryElement("a", "btn btn-secondary btn-sm", "Join Wing");
+      joinLink.setAttribute("href", "join-society.html");
+
+      actions.appendChild(detailsLink);
+      actions.appendChild(joinLink);
+      footer.appendChild(actions);
+
+      card.appendChild(body);
+      card.appendChild(footer);
+      return card;
+    }
+
+    function renderDirectory() {
+      var filteredWings = filterWings();
+      updateSummary(filteredWings);
+      gridEl.innerHTML = "";
+
+      if (filteredWings.length === 0) {
+        if (emptyStateEl) {
+          emptyStateEl.hidden = false;
+        }
+        if (emptyDescEl) {
+          var trimmed = state.searchQuery.trim();
+          if (trimmed && state.activeCategory !== "All") {
+            emptyDescEl.textContent =
+              'No wings matched "' + trimmed + '" inside the ' + state.activeCategory + " category.";
+          } else if (trimmed) {
+            emptyDescEl.textContent =
+              'No wings matched "' + trimmed + '" across wing names, taglines, or tech stacks.';
+          } else {
+            emptyDescEl.textContent =
+              "No wings matched the selected domain filter. Reset filters to view all 6 wings.";
+          }
+        }
+        return;
+      }
+
+      if (emptyStateEl) {
+        emptyStateEl.hidden = true;
+      }
+
+      var fragment = document.createDocumentFragment();
+      filteredWings.forEach(function (wing) {
+        fragment.appendChild(buildWingCard(wing));
+      });
+      gridEl.appendChild(fragment);
+    }
+
+    function resetFilters() {
+      state.searchQuery = "";
+      state.activeCategory = "All";
+      searchInput.value = "";
+      renderCategoryPills();
+      renderDirectory();
+      searchInput.focus();
+    }
+
+    searchInput.addEventListener("input", function (event) {
+      state.searchQuery = event.target.value;
+      renderDirectory();
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener("click", resetFilters);
+    }
+
+    renderCategoryPills();
+    renderDirectory();
+  }
+
+  document.addEventListener("DOMContentLoaded", initSocietyDirectory);
+})();
