@@ -650,3 +650,440 @@
     }
   }
 })();
+
+
+/* ==========================================================================
+   Page 8: Student Dashboard Logic (Appended)
+   ========================================================================== */
+
+(function () {
+  "use strict";
+
+  const STORAGE_KEY_CURRENT = "ncs_current_student";
+  const STORAGE_KEY_EVENTS = "ncs_registered_events";
+  const STORAGE_KEY_TASKS = "ncs_student_tasks";
+
+  const DEFAULT_SAMPLE_EVENTS = [
+    {
+      passId: "NCS-2026-104",
+      title: "Nexus AI & Agents Hackathon",
+      date: "Dec 05, 2026",
+      mode: "In-Person · Auditorium",
+      status: "Confirmed",
+    },
+    {
+      passId: "NCS-2026-218",
+      title: "Full-Stack Systems & Cloud Lab",
+      date: "Dec 12, 2026",
+      mode: "Hybrid · CS Lab 04",
+      status: "Confirmed",
+    },
+  ];
+
+  const DEFAULT_SAMPLE_TASKS = [
+    {
+      id: "task-1",
+      text: "Verify NU student profile & technical wings",
+      completed: true,
+    },
+    {
+      id: "task-2",
+      text: "Download Hackathon starter repository & rules guide",
+      completed: false,
+    },
+    {
+      id: "task-3",
+      text: "Join NCS wing channel & introduce your team",
+      completed: false,
+    },
+    {
+      id: "task-4",
+      text: "Confirm lab workstation for Cloud Systems Workshop",
+      completed: false,
+    },
+  ];
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const dashboardRoot = document.getElementById("dashboard-page");
+    if (!dashboardRoot) return;
+
+    initSignOutButton();
+    initDashboardDemoLogin();
+    initChecklistForm();
+    renderDashboardState();
+  });
+
+  function readStoredJson(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw === null) return { exists: false, value: null };
+      return { exists: true, value: JSON.parse(raw) };
+    } catch {
+      return { exists: false, value: null };
+    }
+  }
+
+  function writeStoredJson(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function getActiveStudent() {
+    const { exists, value } = readStoredJson(STORAGE_KEY_CURRENT);
+    if (!exists || !value || typeof value !== "object" || !value.isLoggedIn) {
+      return null;
+    }
+    return value;
+  }
+
+  function renderDashboardState() {
+    const guardSection = document.getElementById("dashboard-auth-guard");
+    const contentSection = document.getElementById("dashboard-content");
+    const navLoginItem = document.getElementById("nav-login-item");
+    const navSignoutItem = document.getElementById("nav-signout-item");
+
+    const student = getActiveStudent();
+
+    if (!student) {
+      if (guardSection) guardSection.hidden = false;
+      if (contentSection) contentSection.hidden = true;
+      if (navLoginItem) navLoginItem.hidden = false;
+      if (navSignoutItem) navSignoutItem.hidden = true;
+      return;
+    }
+
+    if (guardSection) guardSection.hidden = true;
+    if (contentSection) contentSection.hidden = false;
+    if (navLoginItem) navLoginItem.hidden = true;
+    if (navSignoutItem) navSignoutItem.hidden = false;
+
+    populateStudentGreetingAndKpis(student);
+    const events = loadRegisteredEvents();
+    renderRegisteredEventsTable(events);
+    updateRegisteredEventsKpi(events.length);
+
+    const tasks = loadStudentTasks();
+    renderChecklist(tasks);
+  }
+
+  function populateStudentGreetingAndKpis(student) {
+    const nameEl = document.getElementById("dash-student-name");
+    const rollEl = document.getElementById("dash-student-roll");
+    const deptEl = document.getElementById("dash-student-dept");
+    const emailChip = document.getElementById("dash-email-chip");
+    const emailEl = document.getElementById("dash-student-email");
+
+    const wingsEl = document.getElementById("kpi-wings");
+    const hoursEl = document.getElementById("kpi-hours");
+    const tierEl = document.getElementById("kpi-tier");
+
+    if (nameEl) nameEl.textContent = student.name || "NCS Student";
+    if (rollEl) rollEl.textContent = student.rollNo || "23I-0542";
+    if (deptEl) deptEl.textContent = student.department || "BS Computer Science";
+
+    if (emailChip && emailEl) {
+      if (student.email) {
+        emailEl.textContent = student.email;
+        emailChip.hidden = false;
+      } else {
+        emailChip.hidden = true;
+      }
+    }
+
+    if (wingsEl) {
+      const wingsCount = Array.isArray(student.wings)
+        ? student.wings.length
+        : Number.isFinite(Number(student.joinedWings))
+        ? Number(student.joinedWings)
+        : 3;
+      wingsEl.textContent = String(wingsCount);
+    }
+
+    if (hoursEl) {
+      hoursEl.textContent = student.workshopHours
+        ? String(student.workshopHours)
+        : "18 hrs";
+    }
+
+    if (tierEl) {
+      tierEl.textContent = student.membershipTier || student.tier || "Core Member";
+    }
+  }
+
+  function updateRegisteredEventsKpi(count) {
+    const eventsKpiEl = document.getElementById("kpi-events");
+    if (eventsKpiEl) {
+      eventsKpiEl.textContent = String(count);
+    }
+  }
+
+  function initSignOutButton() {
+    const signOutBtn = document.getElementById("sign-out-btn");
+    if (!signOutBtn) return;
+
+    signOutBtn.addEventListener("click", () => {
+      const { exists, value } = readStoredJson(STORAGE_KEY_CURRENT);
+      if (exists && value && typeof value === "object") {
+        value.isLoggedIn = false;
+        writeStoredJson(STORAGE_KEY_CURRENT, value);
+      } else {
+        try {
+          localStorage.removeItem(STORAGE_KEY_CURRENT);
+        } catch {
+          // Ignore storage errors in restricted environments
+        }
+      }
+      window.location.href = "login.html";
+    });
+  }
+
+  function initDashboardDemoLogin() {
+    const demoBtn = document.getElementById("dashboard-demo-login-btn");
+    if (!demoBtn) return;
+
+    demoBtn.addEventListener("click", () => {
+      const demoStudent = {
+        name: "Ayesha Khan",
+        rollNo: "23I-0542",
+        email: "i230542@isb.nu.edu.pk",
+        department: "BS Computer Science",
+        isLoggedIn: true,
+      };
+      writeStoredJson(STORAGE_KEY_CURRENT, demoStudent);
+      renderDashboardState();
+    });
+  }
+
+  /* --------------------------------------------------------------------------
+     My Registered Events Table (ncs_registered_events)
+     -------------------------------------------------------------------------- */
+  function loadRegisteredEvents() {
+    const { exists, value } = readStoredJson(STORAGE_KEY_EVENTS);
+    if (!exists || !Array.isArray(value) || value.length === 0) {
+      const seeded = DEFAULT_SAMPLE_EVENTS.map((item) => ({ ...item }));
+      writeStoredJson(STORAGE_KEY_EVENTS, seeded);
+      return seeded;
+    }
+    return value;
+  }
+
+  function renderRegisteredEventsTable(events) {
+    const tbody = document.getElementById("registered-events-tbody");
+    const emptyState = document.getElementById("events-empty-state");
+    if (!tbody) return;
+
+    tbody.innerHTML = "";
+
+    if (!events.length) {
+      if (emptyState) emptyState.hidden = false;
+      return;
+    }
+
+    if (emptyState) emptyState.hidden = true;
+
+    events.forEach((ev) => {
+      const passId = ev.passId || ev.id || ev.pass_id || "NCS-2026-000";
+      const title = ev.title || ev.eventTitle || ev.eventName || ev.name || "NCS Campus Event";
+      const date = ev.date || ev.eventDate || "TBA";
+      const mode = ev.mode || ev.participationMode || "In-Person";
+      const status = ev.status || "Confirmed";
+
+      const row = document.createElement("tr");
+
+      const passCell = document.createElement("td");
+      passCell.dataset.label = "Pass ID";
+      const code = document.createElement("span");
+      code.className = "pass-id-code";
+      code.textContent = passId;
+      passCell.appendChild(code);
+
+      const titleCell = document.createElement("td");
+      titleCell.dataset.label = "Event Title";
+      titleCell.className = "event-title-cell";
+      titleCell.textContent = title;
+
+      const dateCell = document.createElement("td");
+      dateCell.dataset.label = "Date";
+      dateCell.className = "event-date-cell";
+      dateCell.textContent = date;
+
+      const modeCell = document.createElement("td");
+      modeCell.dataset.label = "Participation Mode";
+      modeCell.className = "event-mode-cell";
+      modeCell.textContent = mode;
+
+      const statusCell = document.createElement("td");
+      statusCell.dataset.label = "Status";
+      const badge = document.createElement("span");
+      badge.className = "status-badge status-badge-confirmed";
+      badge.textContent = status;
+      statusCell.appendChild(badge);
+
+      row.appendChild(passCell);
+      row.appendChild(titleCell);
+      row.appendChild(dateCell);
+      row.appendChild(modeCell);
+      row.appendChild(statusCell);
+
+      tbody.appendChild(row);
+    });
+  }
+
+  /* --------------------------------------------------------------------------
+     Interactive Student Action Checklist (ncs_student_tasks)
+     -------------------------------------------------------------------------- */
+  function loadStudentTasks() {
+    const { exists, value } = readStoredJson(STORAGE_KEY_TASKS);
+    if (!exists || !Array.isArray(value)) {
+      const seeded = DEFAULT_SAMPLE_TASKS.map((task) => ({ ...task }));
+      writeStoredJson(STORAGE_KEY_TASKS, seeded);
+      return seeded;
+    }
+    return value.filter(
+      (task) => task && typeof task === "object" && typeof task.text === "string"
+    );
+  }
+
+  function saveStudentTasks(tasks) {
+    writeStoredJson(STORAGE_KEY_TASKS, tasks);
+  }
+
+  function initChecklistForm() {
+    const form = document.getElementById("checklist-form");
+    const input = document.getElementById("new-task-input");
+    const errorEl = document.getElementById("new-task-error");
+    if (!form || !input) return;
+
+    input.addEventListener("input", () => {
+      if (input.classList.contains("is-invalid") && input.value.trim().length > 0) {
+        clearTaskInputError(input, errorEl);
+      }
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const text = input.value.trim();
+
+      if (!text) {
+        if (errorEl) {
+          input.classList.add("is-invalid");
+          input.setAttribute("aria-invalid", "true");
+          errorEl.textContent = "Please enter a task description before adding.";
+          errorEl.hidden = false;
+        }
+        input.focus();
+        return;
+      }
+
+      clearTaskInputError(input, errorEl);
+
+      const tasks = loadStudentTasks();
+      tasks.push({
+        id: "task-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
+        text,
+        completed: false,
+      });
+      saveStudentTasks(tasks);
+
+      input.value = "";
+      renderChecklist(tasks);
+      input.focus();
+    });
+  }
+
+  function clearTaskInputError(input, errorEl) {
+    input.classList.remove("is-invalid");
+    input.removeAttribute("aria-invalid");
+    if (errorEl) {
+      errorEl.textContent = "";
+      errorEl.hidden = true;
+    }
+  }
+
+  function renderChecklist(tasks) {
+    const listEl = document.getElementById("checklist-items");
+    const emptyEl = document.getElementById("checklist-empty-state");
+    if (!listEl) return;
+
+    listEl.innerHTML = "";
+
+    if (!tasks.length) {
+      if (emptyEl) emptyEl.hidden = false;
+      updateChecklistProgress(tasks);
+      return;
+    }
+
+    if (emptyEl) emptyEl.hidden = true;
+
+    tasks.forEach((task) => {
+      const li = document.createElement("li");
+      li.className = "checklist-item" + (task.completed ? " is-completed" : "");
+
+      const label = document.createElement("label");
+      label.className = "checklist-label";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "checklist-checkbox";
+      checkbox.checked = Boolean(task.completed);
+
+      checkbox.addEventListener("change", () => {
+        const currentTasks = loadStudentTasks();
+        const target = currentTasks.find((item) => item.id === task.id);
+        if (target) {
+          target.completed = checkbox.checked;
+          saveStudentTasks(currentTasks);
+          renderChecklist(currentTasks);
+        }
+      });
+
+      const textSpan = document.createElement("span");
+      textSpan.className = "checklist-text";
+      textSpan.textContent = task.text;
+
+      label.appendChild(checkbox);
+      label.appendChild(textSpan);
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.type = "button";
+      deleteBtn.className = "checklist-delete-btn";
+      deleteBtn.setAttribute("aria-label", `Remove task: ${task.text}`);
+      deleteBtn.textContent = "×";
+
+      deleteBtn.addEventListener("click", () => {
+        const updatedTasks = loadStudentTasks().filter((item) => item.id !== task.id);
+        saveStudentTasks(updatedTasks);
+        renderChecklist(updatedTasks);
+      });
+
+      li.appendChild(label);
+      li.appendChild(deleteBtn);
+      listEl.appendChild(li);
+    });
+
+    updateChecklistProgress(tasks);
+  }
+
+  function updateChecklistProgress(tasks) {
+    const total = tasks.length;
+    const completed = tasks.filter((task) => Boolean(task.completed)).length;
+    const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+    const percentEl = document.getElementById("checklist-progress-text");
+    const barEl = document.getElementById("checklist-progress-bar");
+    const trackEl = document.getElementById("checklist-progress-track");
+    const summaryEl = document.getElementById("checklist-progress-summary");
+
+    if (percentEl) percentEl.textContent = `${percent}%`;
+    if (barEl) barEl.style.width = `${percent}%`;
+    if (trackEl) trackEl.setAttribute("aria-valuenow", String(percent));
+    if (summaryEl) {
+      const noun = total === 1 ? "task" : "tasks";
+      summaryEl.textContent = `${completed} of ${total} ${noun} completed`;
+    }
+  }
+})();

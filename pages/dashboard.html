@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Student Dashboard for the Nexus Computing Society (NCS) university portal. View your KPIs, registered event passes, and interactive action checklist.">
+  <title>Student Dashboard | Nexus Computing Society</title>
+  <link rel="stylesheet" href="../css/student-account.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Sticky Header & Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="Nexus Computing Society Home">
+        <img
+          src="../images/logo.png"
+          alt="Nexus Computing Society Logo"
+          class="brand-logo"
+          width="44"
+          height="44"
+        >
+        <div class="brand-text">
+          <span class="brand-name">Nexus Computing Society</span>
+          <span class="brand-tagline">Student Portal</span>
+        </div>
+      </a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-controls="primary-nav"
+        aria-expanded="false"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-line" aria-hidden="true"></span>
+        <span class="hamburger-line" aria-hidden="true"></span>
+        <span class="hamburger-line" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="primary-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="workshops.html" class="nav-link">Workshops</a></li>
+          <li><a href="event-register.html" class="nav-link">Register Event</a></li>
+          <li><a href="profile.html" class="nav-link">Profile</a></li>
+          <li><a href="dashboard.html" class="nav-link is-active" aria-current="page">Dashboard</a></li>
+          <li id="nav-login-item"><a href="login.html" class="nav-link nav-link-cta">Student Login</a></li>
+          <li id="nav-signout-item" hidden>
+            <button type="button" id="sign-out-btn" class="btn-nav-signout">Sign Out</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Content -->
+  <main id="main-content" class="dashboard-main">
+    <div id="dashboard-page" class="container dashboard-container">
+      <!-- Session Guard: Shown when no active student session exists -->
+      <section
+        id="dashboard-auth-guard"
+        class="guard-section"
+        aria-labelledby="guard-heading"
+        hidden
+      >
+        <div class="guard-card">
+          <span class="portal-badge">Session Required</span>
+          <h1 id="guard-heading" class="guard-title">Sign in to view your Student Dashboard</h1>
+          <p class="guard-subtitle">
+            Access your Nexus Computing Society membership overview, confirmed event passes, and semester action checklist by signing in with your university account.
+          </p>
+          <div class="guard-actions">
+            <a href="login.html" class="btn btn-primary btn-full">Go to Student Login</a>
+            <div class="auth-divider" role="separator">
+              <span>Or Preview Instantly</span>
+            </div>
+            <button type="button" id="dashboard-demo-login-btn" class="btn btn-demo btn-full">
+              Quick Demo Student Login
+            </button>
+            <p class="demo-note">
+              Signs in as demo member <strong>Ayesha Khan (23I-0542)</strong> and unlocks the dashboard.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Authenticated Dashboard Workspace -->
+      <div id="dashboard-content" class="dashboard-content" hidden>
+        <!-- Student Greeting & Quick Actions -->
+        <section class="dashboard-hero-card" aria-labelledby="dash-greeting-heading">
+          <div class="hero-identity">
+            <span class="portal-badge">NCS Member Dashboard</span>
+            <h1 id="dash-greeting-heading" class="hero-title">
+              Welcome back, <span id="dash-student-name">Student</span>
+            </h1>
+            <div class="student-meta-list" aria-label="Student details">
+              <span class="meta-chip">
+                <span class="meta-chip-label">Roll No</span>
+                <strong id="dash-student-roll">--</strong>
+              </span>
+              <span class="meta-chip">
+                <span class="meta-chip-label">Department</span>
+                <strong id="dash-student-dept">--</strong>
+              </span>
+              <span class="meta-chip" id="dash-email-chip" hidden>
+                <span class="meta-chip-label">Email</span>
+                <strong id="dash-student-email">--</strong>
+              </span>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a href="profile.html" class="btn btn-outline">My Profile</a>
+            <a href="event-register.html" class="btn btn-primary">Register for Event</a>
+          </div>
+        </section>
+
+        <!-- 4 KPI Summary Cards -->
+        <section class="kpi-section" aria-label="Student KPI Summary">
+          <div class="kpi-grid">
+            <article class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Joined Wings</span>
+                <span class="kpi-icon" aria-hidden="true">01</span>
+              </div>
+              <p class="kpi-value" id="kpi-wings">3</p>
+              <p class="kpi-meta">AI · Web Systems · Cyber</p>
+            </article>
+
+            <article class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Registered Events</span>
+                <span class="kpi-icon" aria-hidden="true">02</span>
+              </div>
+              <p class="kpi-value" id="kpi-events">2</p>
+              <p class="kpi-meta">Confirmed active passes</p>
+            </article>
+
+            <article class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Workshop Hours</span>
+                <span class="kpi-icon" aria-hidden="true">03</span>
+              </div>
+              <p class="kpi-value" id="kpi-hours">18 hrs</p>
+              <p class="kpi-meta">Fall 2026 attendance</p>
+            </article>
+
+            <article class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Membership Tier</span>
+                <span class="kpi-icon" aria-hidden="true">04</span>
+              </div>
+              <p class="kpi-value kpi-value-tier" id="kpi-tier">Core Member</p>
+              <p class="kpi-meta">Active NU Islamabad chapter</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- Primary Workspace Grid: Events Table + Action Checklist -->
+        <div class="dashboard-grid">
+          <!-- My Registered Events Table -->
+          <section class="dashboard-card events-card" aria-labelledby="events-heading">
+            <div class="card-header">
+              <div>
+                <h2 id="events-heading" class="card-title">My Registered Events</h2>
+                <p class="card-subtitle">Your active passes for upcoming society workshops and hackathons.</p>
+              </div>
+              <a href="event-register.html" class="card-header-link">+ New Pass</a>
+            </div>
+
+            <div class="table-responsive">
+              <table class="events-table" aria-label="Registered Event Passes">
+                <thead>
+                  <tr>
+                    <th scope="col">Pass ID</th>
+                    <th scope="col">Event Title</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Participation Mode</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="registered-events-tbody"></tbody>
+              </table>
+            </div>
+
+            <p id="events-empty-state" class="empty-state" hidden>
+              No registered event passes found. <a href="event-register.html" class="inline-link">Register for an upcoming event</a>.
+            </p>
+          </section>
+
+          <!-- Interactive Student Action Checklist -->
+          <section class="dashboard-card checklist-card" aria-labelledby="checklist-heading">
+            <div class="card-header">
+              <div>
+                <h2 id="checklist-heading" class="card-title">Student Action Checklist</h2>
+                <p class="card-subtitle">Check off milestones or add personal goals for this semester.</p>
+              </div>
+            </div>
+
+            <!-- Live Completion Progress Bar -->
+            <div class="checklist-progress" aria-live="polite">
+              <div class="progress-header">
+                <span id="checklist-progress-label" class="progress-title">Completion Progress</span>
+                <span id="checklist-progress-text" class="progress-percent">0%</span>
+              </div>
+              <div
+                class="progress-track"
+                id="checklist-progress-track"
+                role="progressbar"
+                aria-labelledby="checklist-progress-label"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+              >
+                <div class="progress-fill" id="checklist-progress-bar"></div>
+              </div>
+              <p class="progress-summary" id="checklist-progress-summary">0 of 0 tasks completed</p>
+            </div>
+
+            <!-- Add Task Form -->
+            <form id="checklist-form" class="checklist-form" novalidate>
+              <div class="checklist-input-row">
+                <label for="new-task-input" class="sr-only">New action item</label>
+                <input
+                  type="text"
+                  id="new-task-input"
+                  name="taskTitle"
+                  class="form-input"
+                  placeholder="Add a new checklist task..."
+                  maxlength="100"
+                  aria-describedby="new-task-error"
+                  required
+                >
+                <button type="submit" class="btn btn-primary btn-add-task">Add Task</button>
+              </div>
+              <p id="new-task-error" class="field-error" role="alert" hidden></p>
+            </form>
+
+            <!-- Persistent Checklist Items -->
+            <ul id="checklist-items" class="checklist-list" aria-label="Student action tasks"></ul>
+            <p id="checklist-empty-state" class="empty-state" hidden>
+              All caught up! Add a new task above to keep tracking your progress.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Matching Society Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-col">
+        <a href="../index.html" class="brand footer-brand">
+          <img
+            src="../images/logo.png"
+            alt="Nexus Computing Society Logo"
+            class="brand-logo"
+            width="40"
+            height="40"
+          >
+          <div class="brand-text">
+            <span class="brand-name">Nexus Computing Society</span>
+            <span class="brand-tagline">Innovate · Code · Collaborate</span>
+          </div>
+        </a>
+        <p class="footer-description">
+          Empowering student developers, researchers, and builders through hands-on workshops, hackathons, and technical mentorship.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Portal Pages</h2>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="about.html">About NCS</a></li>
+          <li><a href="events.html">Events &amp; Hackathons</a></li>
+          <li><a href="workshops.html">Technical Workshops</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Student Hub</h2>
+        <ul class="footer-links">
+          <li><a href="dashboard.html" aria-current="page">Member Dashboard</a></li>
+          <li><a href="profile.html">Student Profile</a></li>
+          <li><a href="event-register.html">Event Registration</a></li>
+          <li><a href="login.html">Student Login</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Campus Chapter</h2>
+        <p class="footer-meta">FAST-NUCES Islamabad Campus</p>
+        <p class="footer-meta">A.K. Brohi Road, H-11/4, Islamabad</p>
+        <p class="footer-meta">ncs@isb.nu.edu.pk</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; <span id="footer-year">2026</span> Nexus Computing Society. All rights reserved.</p>
+        <p class="footer-bottom-tag">SE-D Group 09 · University Portal</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/student-account.js"></script>
+</body>
+</html>
