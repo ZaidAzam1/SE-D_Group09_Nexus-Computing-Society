@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View schedule timelines, rules, speakers, prize pools, seat availability, and FAQs for Nexus Computing Society events.">
+  <title>Event Details | Nexus Computing Society</title>
+  <link rel="stylesheet" href="../css/events.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="Nexus Computing Society Home">
+        <img
+          src="../images/logo.png"
+          alt="Nexus Computing Society Logo"
+          class="brand-logo"
+          width="44"
+          height="44"
+        >
+        <span class="brand-text">
+          <strong class="brand-title">Nexus</strong>
+          <span class="brand-subtitle">Computing Society</span>
+        </span>
+      </a>
+
+      <button
+        type="button"
+        id="nav-toggle"
+        class="nav-toggle"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-box" aria-hidden="true">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </span>
+      </button>
+
+      <nav id="primary-nav" class="primary-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="membership.html" class="nav-link">Membership</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="event-details.html" class="nav-link is-active" aria-current="page">Event Details</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li class="nav-cta-item">
+            <a href="event-register.html" class="nav-cta">Register Now</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="details-main">
+    <section class="details-topbar" aria-label="Event navigation and switcher">
+      <div class="container details-topbar-inner">
+        <a href="events.html" class="back-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Back to All Events</span>
+        </a>
+
+        <div class="switcher-control">
+          <label for="event-switcher" class="switcher-label">Switch Event</label>
+          <select id="event-switcher" class="event-switcher" aria-label="Switch displayed event"></select>
+        </div>
+      </div>
+    </section>
+
+    <section class="details-hero" aria-labelledby="detail-title">
+      <div class="container details-hero-grid">
+        <article class="details-overview-card">
+          <div class="details-badges">
+            <span id="detail-category" class="category-badge">Hackathons</span>
+            <span id="detail-status" class="status-badge status-badge--open">
+              <span class="status-dot" aria-hidden="true"></span>
+              Open
+            </span>
+          </div>
+
+          <h1 id="detail-title" class="details-title">Nexus CodeRush 2026 Hackathon</h1>
+          <p id="detail-summary" class="details-summary"></p>
+
+          <dl class="details-specs-grid">
+            <div class="spec-tile">
+              <dt class="spec-label">Hosting Wing</dt>
+              <dd id="detail-wing" class="spec-value"></dd>
+            </div>
+            <div class="spec-tile">
+              <dt class="spec-label">Date &amp; Time</dt>
+              <dd id="detail-date" class="spec-value"></dd>
+            </div>
+            <div class="spec-tile">
+              <dt class="spec-label">Venue</dt>
+              <dd id="detail-venue" class="spec-value"></dd>
+            </div>
+            <div class="spec-tile">
+              <dt class="spec-label">Prize Pool</dt>
+              <dd id="detail-prize" class="spec-value spec-value--accent"></dd>
+            </div>
+            <div class="spec-tile">
+              <dt class="spec-label">Entry Fee</dt>
+              <dd id="detail-fee" class="spec-value"></dd>
+            </div>
+            <div class="spec-tile">
+              <dt class="spec-label">Remaining Seats</dt>
+              <dd id="detail-seats-remaining" class="spec-value"></dd>
+            </div>
+          </dl>
+        </article>
+
+        <aside class="registration-panel" aria-label="Registration summary and action">
+          <div class="registration-panel-header">
+            <span class="eyebrow-badge">Registration &amp; Capacity</span>
+            <h2 class="panel-heading">Reserve Your Spot</h2>
+            <p id="detail-panel-note" class="panel-note">
+              Seats are allocated on a first-come, verified student ID basis.
+            </p>
+          </div>
+
+          <div class="seat-progress-block">
+            <div class="seat-progress-header">
+              <span class="seat-label">Seat Fill Rate</span>
+              <span id="detail-seats-summary" class="seat-numbers">0 / 0 (0%)</span>
+            </div>
+            <div
+              id="detail-progress-track"
+              class="progress-track"
+              role="progressbar"
+              aria-label="Selected event seat availability"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <div id="detail-progress-fill" class="progress-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <ul class="panel-checklist">
+            <li>Digital check-in pass issued upon confirmation</li>
+            <li>Official participation &amp; merit certificates</li>
+            <li>On-campus technical mentor &amp; organizer support</li>
+          </ul>
+
+          <div class="panel-actions">
+            <button type="button" id="proceed-register-btn" class="btn btn-primary btn-full">
+              Proceed to Registration
+            </button>
+            <a href="events.html" class="btn btn-secondary btn-full">
+              Browse Other Events
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="details-tabs-section" aria-labelledby="program-info-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="program-info-heading">Program Breakdown</h2>
+          <p>Review the event timeline, participation rules, and invited speakers &amp; judges.</p>
+        </div>
+
+        <div class="tabs-shell">
+          <div class="tab-list" role="tablist" aria-label="Event details sections">
+            <button
+              type="button"
+              id="tab-timeline"
+              class="tab-btn is-active"
+              role="tab"
+              aria-selected="true"
+              aria-controls="panel-timeline"
+              data-tab="timeline"
+            >
+              Event Timeline
+            </button>
+            <button
+              type="button"
+              id="tab-rules"
+              class="tab-btn"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-rules"
+              data-tab="rules"
+              tabindex="-1"
+            >
+              Rules &amp; Eligibility
+            </button>
+            <button
+              type="button"
+              id="tab-speakers"
+              class="tab-btn"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-speakers"
+              data-tab="speakers"
+              tabindex="-1"
+            >
+              Speakers &amp; Judges
+            </button>
+          </div>
+
+          <div
+            id="panel-timeline"
+            class="tab-panel is-active"
+            role="tabpanel"
+            aria-labelledby="tab-timeline"
+          >
+            <ol id="timeline-list" class="timeline-list"></ol>
+          </div>
+
+          <div
+            id="panel-rules"
+            class="tab-panel"
+            role="tabpanel"
+            aria-labelledby="tab-rules"
+            hidden
+          >
+            <ul id="rules-list" class="rules-list"></ul>
+          </div>
+
+          <div
+            id="panel-speakers"
+            class="tab-panel"
+            role="tabpanel"
+            aria-labelledby="tab-speakers"
+            hidden
+          >
+            <div id="speakers-grid" class="speakers-grid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="faq-heading">FAQ &amp; Event Guidelines</h2>
+          <p>Answers to common questions about check-in, gear requirements, and team guidelines.</p>
+        </div>
+
+        <div id="faq-accordion" class="accordion-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand footer-brand-link">
+          <img
+            src="../images/logo.png"
+            alt="Nexus Computing Society Logo"
+            class="brand-logo"
+            width="40"
+            height="40"
+          >
+          <span class="brand-text">
+            <strong class="brand-title">Nexus</strong>
+            <span class="brand-subtitle">Computing Society</span>
+          </span>
+        </a>
+        <p class="footer-tagline">
+          Empowering student developers, security researchers, AI builders, and digital creators across campus.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Portal Pages</h2>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="about.html">About Society</a></li>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="events.html">Events Listing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Participation</h2>
+        <ul class="footer-links">
+          <li><a href="event-details.html">Event Details</a></li>
+          <li><a href="event-register.html">Event Registration</a></li>
+          <li><a href="contact.html">Contact &amp; Inquiries</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Campus Chapter</h2>
+        <p class="footer-meta">Department of Computer Science, Innovation Block C</p>
+        <p class="footer-meta">Office Hours: Mon &ndash; Fri, 10:00 AM &ndash; 4:00 PM</p>
+        <p class="footer-meta">nexus.society@university.edu</p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Nexus Computing Society. All rights reserved.</p>
+      <p class="footer-note">Built for the University Computing Portal</p>
+    </div>
+  </footer>
+
+  <script src="../js/events.js"></script>
+</body>
+</html>
