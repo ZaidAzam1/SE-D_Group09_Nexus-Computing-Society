@@ -581,9 +581,455 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     initNavigation();
-    attachFormListeners();
-    updateMotivationCounter();
-    updateCalculator();
-    renderRecentSubmissions();
+    if (form) {
+      attachFormListeners();
+      updateMotivationCounter();
+      updateCalculator();
+      renderRecentSubmissions();
+    }
+  });
+})();
+
+/* ==========================================================================
+   Page 11: Membership Status, Progress Tracker & Review Simulator
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  const STORAGE_KEY = "ncs_applications";
+  const ACTIVE_SOCIETIES_KEY = "ncs_active_societies";
+  const REVIEW_STEPS = [
+    "Submitted",
+    "Under Review",
+    "Interview Scheduled",
+    "Approved"
+  ];
+
+  const SAMPLE_APPLICATIONS = [
+    {
+      trackingId: "APP-2026-904",
+      fullName: "Ayesha Siddiqui",
+      rollNumber: "23I-0418",
+      email: "i230418@isb.nu.edu.pk",
+      githubUrl: "https://github.com/ayesha-siddiqui",
+      primaryWing: "AI & ML",
+      secondaryWing: "",
+      role: "Technical Team",
+      earlyBirdDiscount: false,
+      totalFee: 300,
+      motivation: "Excited to contribute to Nexus AI research labs and mentor freshmen in Python and PyTorch.",
+      status: "Approved",
+      submittedAt: "2026-10-14T10:30:00.000Z"
+    },
+    {
+      trackingId: "APP-2026-972",
+      fullName: "Hamza Tariq",
+      rollNumber: "24I-1182",
+      email: "i241182@nu.edu.pk",
+      githubUrl: "https://github.com/hamza-tariq-sec",
+      primaryWing: "Cyber Security",
+      secondaryWing: "Web & App Dev",
+      role: "General Member",
+      earlyBirdDiscount: true,
+      totalFee: 560,
+      motivation: "Looking forward to participating in CTF competitions and learning secure web architecture.",
+      status: "Under Review",
+      submittedAt: "2026-11-02T14:15:00.000Z"
+    }
+  ];
+
+  const statusContainer = document.getElementById("statusApplicationsContainer");
+  if (!statusContainer) return;
+
+  const searchInput = document.getElementById("statusSearchInput");
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const statTotalCount = document.getElementById("statTotalCount");
+  const statApprovedCount = document.getElementById("statApprovedCount");
+
+  const passModal = document.getElementById("passModal");
+  const passSummaryText = document.getElementById("passSummaryText");
+  const closePassModalBtn = document.getElementById("closePassModalBtn");
+  const dismissPassModalBtn = document.getElementById("dismissPassModalBtn");
+  const copyPassSummaryBtn = document.getElementById("copyPassSummaryBtn");
+
+  let activeFilter = "All";
+  let searchQuery = "";
+
+  function normalizeStatus(status) {
+    if (REVIEW_STEPS.indexOf(status) !== -1) {
+      return status;
+    }
+    return "Submitted";
+  }
+
+  function getStepIndex(status) {
+    const idx = REVIEW_STEPS.indexOf(normalizeStatus(status));
+    return idx === -1 ? 0 : idx;
+  }
+
+  function loadOrSeedApplications() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (err) {
+      // Fallback to sample data if storage is corrupted
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(SAMPLE_APPLICATIONS));
+    return SAMPLE_APPLICATIONS.slice();
+  }
+
+  function saveApplicationsList(apps) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(apps));
+  }
+
+  function syncActiveSocietyWing(app) {
+    if (normalizeStatus(app.status) !== "Approved") return;
+    let activeList = [];
+    try {
+      const raw = localStorage.getItem(ACTIVE_SOCIETIES_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) activeList = parsed;
+      }
+    } catch (err) {
+      activeList = [];
+    }
+
+    const wingsToActivate = [app.primaryWing];
+    if (app.secondaryWing) {
+      wingsToActivate.push(app.secondaryWing);
+    }
+
+    let changed = false;
+    wingsToActivate.forEach(function (wingName) {
+      if (!wingName) return;
+      const alreadyExists = activeList.some(function (item) {
+        return item.wing === wingName && item.trackingId === app.trackingId;
+      });
+      if (!alreadyExists) {
+        activeList.push({
+          wing: wingName,
+          role: app.role,
+          trackingId: app.trackingId,
+          memberName: app.fullName,
+          rollNumber: app.rollNumber,
+          joinedAt: new Date().toISOString()
+        });
+        changed = true;
+      }
+    });
+
+    if (changed) {
+      localStorage.setItem(ACTIVE_SOCIETIES_KEY, JSON.stringify(activeList));
+    }
+  }
+
+  function openPassModal(app) {
+    const wings = app.secondaryWing
+      ? app.primaryWing + " + " + app.secondaryWing
+      : app.primaryWing;
+
+    const summary = [
+      "NEXUS COMPUTING SOCIETY — OFFICIAL DIGITAL PASS",
+      "------------------------------------------------",
+      "Tracking ID  : " + app.trackingId,
+      "Member Name  : " + app.fullName,
+      "Roll Number  : " + app.rollNumber,
+      "NU Email     : " + app.email,
+      "Wing(s)      : " + wings,
+      "Role         : " + app.role,
+      "Semester Fee : Rs " + app.totalFee,
+      "Status       : APPROVED (Active 2026)",
+      "------------------------------------------------",
+      "Present this pass at Nexus Computing Society events & wing labs."
+    ].join("\n");
+
+    passSummaryText.textContent = summary;
+    copyPassSummaryBtn.textContent = "Copy Pass Summary";
+    passModal.hidden = false;
+    closePassModalBtn.focus();
+  }
+
+  function closePassModal() {
+    passModal.hidden = true;
+  }
+
+  function buildDigitalCard(app) {
+    const card = document.createElement("div");
+    card.className = "digital-card";
+
+    const wings = app.secondaryWing
+      ? app.primaryWing + " & " + app.secondaryWing
+      : app.primaryWing;
+
+    card.innerHTML =
+      '<div class="digital-card-top">' +
+        '<div class="digital-card-brand">' +
+          '<span class="digital-card-kicker">Official Digital Membership Card</span>' +
+          '<span class="digital-card-org">Nexus Computing Society</span>' +
+        "</div>" +
+        '<span class="digital-card-chip">ACTIVE MEMBER</span>' +
+      "</div>" +
+      '<div class="digital-card-grid">' +
+        '<div class="digital-field">' +
+          '<span class="digital-label">Member</span>' +
+          '<span class="digital-value"></span>' +
+        "</div>" +
+        '<div class="digital-field">' +
+          '<span class="digital-label">Roll No</span>' +
+          '<span class="digital-value"></span>' +
+        "</div>" +
+        '<div class="digital-field">' +
+          '<span class="digital-label">Technical Wing</span>' +
+          '<span class="digital-value"></span>' +
+        "</div>" +
+        '<div class="digital-field">' +
+          '<span class="digital-label">Role</span>' +
+          '<span class="digital-value"></span>' +
+        "</div>" +
+      "</div>" +
+      '<div class="digital-card-footer">' +
+        '<span class="digital-valid"></span>' +
+        '<button type="button" class="btn btn-primary btn-sm download-pass-btn">Download Pass Summary</button>' +
+      "</div>";
+
+    const values = card.querySelectorAll(".digital-value");
+    values[0].textContent = app.fullName;
+    values[1].textContent = app.rollNumber;
+    values[2].textContent = wings;
+    values[3].textContent = app.role;
+    card.querySelector(".digital-valid").textContent = "ID: " + app.trackingId + " • Valid 2026";
+
+    card.querySelector(".download-pass-btn").addEventListener("click", function () {
+      openPassModal(app);
+    });
+
+    return card;
+  }
+
+  function renderApplications() {
+    const apps = loadOrSeedApplications();
+
+    // Ensure any pre-approved apps are synced to ncs_active_societies
+    apps.forEach(syncActiveSocietyWing);
+
+    const approvedTotal = apps.filter(function (a) {
+      return normalizeStatus(a.status) === "Approved";
+    }).length;
+    statTotalCount.textContent = String(apps.length);
+    statApprovedCount.textContent = String(approvedTotal);
+
+    const query = searchQuery.trim().toLowerCase();
+    const filtered = apps.filter(function (app) {
+      const normalized = normalizeStatus(app.status);
+      const matchesFilter = activeFilter === "All" || normalized === activeFilter;
+      const matchesQuery =
+        !query ||
+        app.trackingId.toLowerCase().indexOf(query) !== -1 ||
+        app.primaryWing.toLowerCase().indexOf(query) !== -1 ||
+        (app.secondaryWing && app.secondaryWing.toLowerCase().indexOf(query) !== -1) ||
+        app.fullName.toLowerCase().indexOf(query) !== -1;
+      return matchesFilter && matchesQuery;
+    });
+
+    statusContainer.innerHTML = "";
+
+    if (filtered.length === 0) {
+      const emptyBox = document.createElement("div");
+      emptyBox.className = "empty-status-box";
+      emptyBox.innerHTML =
+        "<p>No membership applications match your current search or status filter.</p>" +
+        '<button type="button" class="btn btn-primary btn-sm" id="resetStatusFiltersBtn">Reset Filters</button>';
+      statusContainer.appendChild(emptyBox);
+      document.getElementById("resetStatusFiltersBtn").addEventListener("click", function () {
+        searchQuery = "";
+        searchInput.value = "";
+        activeFilter = "All";
+        filterButtons.forEach(function (btn) {
+          btn.classList.toggle("active", btn.dataset.filter === "All");
+        });
+        renderApplications();
+      });
+      return;
+    }
+
+    filtered.forEach(function (app) {
+      const normalizedStatus = normalizeStatus(app.status);
+      const stepIndex = getStepIndex(normalizedStatus);
+      const percentage = (stepIndex + 1) * 25;
+      const isApproved = stepIndex === REVIEW_STEPS.length - 1;
+
+      const card = document.createElement("article");
+      card.className = "status-app-card";
+
+      // Header
+      const header = document.createElement("div");
+      header.className = "status-app-header";
+
+      const titleGroup = document.createElement("div");
+      titleGroup.className = "status-app-title-group";
+
+      const idRow = document.createElement("div");
+      idRow.className = "status-app-id-row";
+
+      const idBadge = document.createElement("span");
+      idBadge.className = "submission-id";
+      idBadge.textContent = app.trackingId;
+
+      const statusBadge = document.createElement("span");
+      statusBadge.className = "status-badge " + (isApproved ? "is-approved" : "is-active-step");
+      statusBadge.textContent = normalizedStatus;
+
+      idRow.appendChild(idBadge);
+      idRow.appendChild(statusBadge);
+
+      const nameEl = document.createElement("h3");
+      nameEl.className = "status-app-name";
+      nameEl.textContent = app.fullName + " (" + app.rollNumber + ")";
+
+      const wingsText = app.secondaryWing
+        ? app.primaryWing + " + " + app.secondaryWing
+        : app.primaryWing;
+      const metaEl = document.createElement("p");
+      metaEl.className = "status-app-meta";
+      metaEl.textContent = wingsText + " • " + app.role + " • Rs " + app.totalFee;
+
+      titleGroup.appendChild(idRow);
+      titleGroup.appendChild(nameEl);
+      titleGroup.appendChild(metaEl);
+
+      header.appendChild(titleGroup);
+      card.appendChild(header);
+
+      // 4-Step Progress Tracker
+      const tracker = document.createElement("div");
+      tracker.className = "progress-tracker";
+
+      const trackerHeader = document.createElement("div");
+      trackerHeader.className = "progress-header";
+      trackerHeader.innerHTML =
+        '<span class="progress-title">Review Progress</span>' +
+        '<span class="progress-percent">' + percentage + "% Complete</span>";
+
+      const barTrack = document.createElement("div");
+      barTrack.className = "progress-bar-track";
+      const barFill = document.createElement("div");
+      barFill.className = "progress-bar-fill";
+      barFill.style.width = percentage + "%";
+      barTrack.appendChild(barFill);
+
+      const stepsList = document.createElement("ol");
+      stepsList.className = "progress-steps";
+
+      REVIEW_STEPS.forEach(function (stepLabel, idx) {
+        const li = document.createElement("li");
+        li.className = "progress-step";
+        if (idx < stepIndex || (idx === stepIndex && isApproved)) {
+          li.classList.add("completed");
+        } else if (idx === stepIndex) {
+          li.classList.add("current");
+        }
+
+        const dot = document.createElement("span");
+        dot.className = "step-dot";
+        dot.textContent = idx < stepIndex || (idx === stepIndex && isApproved) ? "✓" : String(idx + 1);
+
+        const labelSpan = document.createElement("span");
+        labelSpan.textContent = (idx + 1) + ". " + stepLabel;
+
+        li.appendChild(dot);
+        li.appendChild(labelSpan);
+        stepsList.appendChild(li);
+      });
+
+      tracker.appendChild(trackerHeader);
+      tracker.appendChild(barTrack);
+      tracker.appendChild(stepsList);
+      card.appendChild(tracker);
+
+      // Simulator Action or Digital Membership Card
+      if (!isApproved) {
+        const actionsRow = document.createElement("div");
+        actionsRow.className = "status-app-actions";
+
+        const note = document.createElement("p");
+        note.className = "simulator-note";
+        note.textContent = "Next stage: " + REVIEW_STEPS[stepIndex + 1];
+
+        const simBtn = document.createElement("button");
+        simBtn.type = "button";
+        simBtn.className = "btn btn-primary btn-sm";
+        simBtn.textContent = "Simulate Review Progress";
+        simBtn.addEventListener("click", function () {
+          const allApps = loadOrSeedApplications();
+          const target = allApps.find(function (item) {
+            return item.trackingId === app.trackingId;
+          });
+          if (target) {
+            const currentIdx = getStepIndex(target.status);
+            if (currentIdx < REVIEW_STEPS.length - 1) {
+              target.status = REVIEW_STEPS[currentIdx + 1];
+              saveApplicationsList(allApps);
+              syncActiveSocietyWing(target);
+              renderApplications();
+            }
+          }
+        });
+
+        actionsRow.appendChild(note);
+        actionsRow.appendChild(simBtn);
+        card.appendChild(actionsRow);
+      } else {
+        card.appendChild(buildDigitalCard(app));
+      }
+
+      statusContainer.appendChild(card);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    searchInput.addEventListener("input", function () {
+      searchQuery = searchInput.value;
+      renderApplications();
+    });
+
+    filterButtons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        activeFilter = btn.dataset.filter || "All";
+        filterButtons.forEach(function (b) {
+          b.classList.toggle("active", b === btn);
+        });
+        renderApplications();
+      });
+    });
+
+    closePassModalBtn.addEventListener("click", closePassModal);
+    dismissPassModalBtn.addEventListener("click", closePassModal);
+    passModal.addEventListener("click", function (event) {
+      if (event.target === passModal) {
+        closePassModal();
+      }
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !passModal.hidden) {
+        closePassModal();
+      }
+    });
+    copyPassSummaryBtn.addEventListener("click", function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(passSummaryText.textContent).then(function () {
+          copyPassSummaryBtn.textContent = "Copied!";
+        });
+      } else {
+        copyPassSummaryBtn.textContent = "Ready to Copy";
+      }
+    });
+
+    renderApplications();
   });
 })();

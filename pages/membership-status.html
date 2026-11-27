@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Track your Nexus Computing Society membership application status, review progress, and access your Official Digital Membership Card.">
+  <title>Membership Status | Nexus Computing Society</title>
+  <link rel="stylesheet" href="../css/membership.css">
+</head>
+<body>
+  <!-- Sticky Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="Nexus Computing Society Home">
+        <img
+          src="../images/logo.png"
+          alt="Nexus Computing Society Logo"
+          class="brand-logo"
+          width="40"
+          height="40"
+          onerror="this.onerror=null;this.src='../images/logo.jpg';"
+        >
+        <div class="brand-text">
+          <span class="brand-name">Nexus Computing Society</span>
+          <span class="brand-sub">FAST-NUCES Islamabad</span>
+        </div>
+      </a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="navToggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="primaryNav"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <nav class="primary-nav" id="primaryNav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="wings.html" class="nav-link">Technical Wings</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="my-societies.html" class="nav-link">My Societies</a></li>
+          <li><a href="membership-status.html" class="nav-link active" aria-current="page">Track Status</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><a href="join-society.html" class="nav-link nav-cta">Join Society</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section class="page-hero">
+      <div class="container">
+        <span class="hero-badge">Application &amp; Review Portal</span>
+        <h1 class="hero-title">Membership Application Status</h1>
+        <p class="hero-subtitle">
+          Track your Nexus Computing Society recruitment progress in real time, simulate review stages, and unlock your Official Digital Membership Card upon approval.
+        </p>
+      </div>
+    </section>
+
+    <!-- Search & Status Filter Controls -->
+    <section class="status-controls-section" aria-label="Search and Filter Applications">
+      <div class="container">
+        <div class="card controls-card">
+          <div class="controls-top">
+            <div class="search-group">
+              <label for="statusSearchInput" class="form-label">Search by Tracking ID or Wing</label>
+              <div class="search-input-wrap">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input
+                  type="search"
+                  id="statusSearchInput"
+                  class="form-input search-input"
+                  placeholder="e.g. APP-2026-904 or AI & ML"
+                >
+              </div>
+            </div>
+
+            <div class="summary-stats" aria-live="polite">
+              <div class="stat-pill">
+                <span class="stat-label">Total</span>
+                <strong id="statTotalCount" class="stat-value">0</strong>
+              </div>
+              <div class="stat-pill stat-pill-accent">
+                <span class="stat-label">Approved</span>
+                <strong id="statApprovedCount" class="stat-value">0</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-bar" role="group" aria-label="Filter applications by status">
+            <button type="button" class="filter-btn active" data-filter="All">All</button>
+            <button type="button" class="filter-btn" data-filter="Submitted">Submitted</button>
+            <button type="button" class="filter-btn" data-filter="Under Review">Under Review</button>
+            <button type="button" class="filter-btn" data-filter="Interview Scheduled">Interview Scheduled</button>
+            <button type="button" class="filter-btn" data-filter="Approved">Approved</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Applications List & Progress Trackers -->
+    <section class="status-list-section" aria-labelledby="applications-list-heading">
+      <div class="container">
+        <div class="status-list-header">
+          <h2 id="applications-list-heading" class="section-title">Your Applications</h2>
+          <a href="join-society.html" class="btn btn-outline btn-sm">+ New Application</a>
+        </div>
+
+        <div id="statusApplicationsContainer" class="status-applications-list" aria-live="polite">
+          <!-- Populated dynamically by js/membership.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pass Summary Modal -->
+  <div id="passModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="passModalTitle" hidden>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 id="passModalTitle" class="modal-title">Official Digital Membership Pass</h2>
+        <button type="button" id="closePassModalBtn" class="modal-close" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-intro">Your membership pass summary is verified and active for the 2026 semester.</p>
+        <pre id="passSummaryText" class="pass-summary-pre"></pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="copyPassSummaryBtn" class="btn btn-primary">Copy Pass Summary</button>
+        <button type="button" id="dismissPassModalBtn" class="btn btn-outline">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matching Society Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand footer-brand-link">
+          <img
+            src="../images/logo.png"
+            alt="Nexus Computing Society Logo"
+            class="brand-logo"
+            width="36"
+            height="36"
+            onerror="this.onerror=null;this.src='../images/logo.jpg';"
+          >
+          <span class="brand-name">Nexus Computing Society</span>
+        </a>
+        <p class="footer-desc">
+          Empowering FAST-NUCES students through hands-on engineering, competitive programming, research, and collaborative tech leadership.
+        </p>
+      </div>
+
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Portal</h3>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="wings.html">Technical Wings</a></li>
+          <li><a href="events.html">Events Calendar</a></li>
+          <li><a href="my-societies.html">My Societies</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Membership</h3>
+        <ul class="footer-links">
+          <li><a href="join-society.html">Join a Society</a></li>
+          <li><a href="membership-status.html">Membership Status</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Campus</h3>
+        <p class="footer-meta">FAST-NUCES, A.K. Brohi Road, H-11/4, Islamabad</p>
+        <p class="footer-meta">Email: nexus@isb.nu.edu.pk</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2026 Nexus Computing Society. All rights reserved.</p>
+        <p>Built by SE-D Group 09</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/membership.js"></script>
+</body>
+</html>
