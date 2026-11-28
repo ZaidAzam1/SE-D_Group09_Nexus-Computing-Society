@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Register for upcoming Nexus Computing Society hackathons, workshops, and seminars at FAST-NUCES Islamabad and receive an instant digital event pass.">
+  <title>Event Registration | Nexus Computing Society</title>
+  <link rel="stylesheet" href="../css/events.css">
+  <link rel="stylesheet" href="../css/event-register.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="Nexus Computing Society Home">
+        <img
+          src="../images/logo.jpg"
+          alt="Nexus Computing Society Logo"
+          class="brand-logo"
+          width="44"
+          height="44"
+        >
+        <span class="brand-text">
+          <strong class="brand-title">Nexus</strong>
+          <span class="brand-subtitle">Computing Society</span>
+        </span>
+      </a>
+
+      <button
+        type="button"
+        id="nav-toggle"
+        class="nav-toggle"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-box" aria-hidden="true">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </span>
+      </button>
+
+      <nav id="primary-nav" class="primary-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="membership.html" class="nav-link">Membership</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="event-details.html" class="nav-link">Event Details</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li class="nav-cta-item">
+            <a href="event-register.html" class="nav-cta is-active" aria-current="page">Register Now</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="register-main">
+    <section class="details-topbar" aria-label="Registration navigation">
+      <div class="container details-topbar-inner">
+        <a href="events.html" class="back-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Back to All Events</span>
+        </a>
+
+        <a id="summary-details-link" href="event-details.html" class="back-link">
+          <span>View Event Details</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="register-hero" aria-labelledby="register-heading">
+      <div class="container">
+        <span class="eyebrow-badge">FAST-NUCES Islamabad (H-12) &bull; Event Registration</span>
+        <h1 id="register-heading">Reserve Your Event Seat</h1>
+        <p class="hero-description">
+          Select an upcoming Nexus Computing Society event, verify your student details, and generate an instant digital event pass for campus check-in.
+        </p>
+      </div>
+    </section>
+
+    <section class="register-workspace" aria-label="Event summary and student registration">
+      <div class="container register-grid">
+        <!-- Left Column: Event Selector & Summary Card -->
+        <aside class="event-summary-card" aria-labelledby="summary-card-heading">
+          <div class="summary-selector-block">
+            <label for="reg-event-select" class="field-label">Select Upcoming Event</label>
+            <select id="reg-event-select" class="form-select" aria-describedby="event-select-help"></select>
+            <p id="event-select-help" class="field-hint">
+              Switching events updates seat availability, venue, and fee details live.
+            </p>
+          </div>
+
+          <div class="summary-divider" role="separator"></div>
+
+          <div class="summary-badges">
+            <span id="summary-category" class="category-badge">Hackathons</span>
+            <span id="summary-status" class="status-badge status-badge--open">
+              <span class="status-dot" aria-hidden="true"></span>
+              Open
+            </span>
+            <span id="summary-fee-badge" class="fee-badge">$15 / Team</span>
+          </div>
+
+          <h2 id="summary-card-heading" class="summary-event-title">Nexus CodeRush 2026 Hackathon</h2>
+          <p id="summary-description" class="summary-event-desc"></p>
+
+          <dl class="summary-meta-list">
+            <div class="summary-meta-row">
+              <dt>Date &amp; Time</dt>
+              <dd id="summary-date"></dd>
+            </div>
+            <div class="summary-meta-row">
+              <dt>Venue (FAST-NUCES H-12)</dt>
+              <dd id="summary-venue"></dd>
+            </div>
+            <div class="summary-meta-row">
+              <dt>Society Host</dt>
+              <dd id="summary-host"></dd>
+            </div>
+            <div class="summary-meta-row">
+              <dt>Available Seats</dt>
+              <dd id="summary-seats" class="summary-seats-highlight"></dd>
+            </div>
+          </dl>
+
+          <div class="seat-progress-block">
+            <div class="seat-progress-header">
+              <span class="seat-label">Capacity Tracker</span>
+              <span id="summary-seats-ratio" class="seat-numbers">0 / 0 (0%)</span>
+            </div>
+            <div
+              id="summary-progress-track"
+              class="progress-track"
+              role="progressbar"
+              aria-label="Selected event seat availability"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <div id="summary-progress-fill" class="progress-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div class="summary-footer-note">
+            <span class="summary-saved-count" id="saved-registrations-count">0 saved passes on this device</span>
+          </div>
+        </aside>
+
+        <!-- Right Column: Registration Form OR Instant Digital Event Pass -->
+        <section class="register-form-card" aria-labelledby="form-section-heading">
+          <div id="registration-form-panel">
+            <div class="form-card-header">
+              <span class="eyebrow-badge">Student Registration Form</span>
+              <h2 id="form-section-heading" class="form-card-title">Participant Details</h2>
+              <p class="form-card-subtitle">
+                All fields marked with <span class="required-mark" aria-hidden="true">*</span> are required. Duplicate registrations for the same Roll Number and event are prevented automatically.
+              </p>
+            </div>
+
+            <div id="form-alert" class="form-alert" role="alert" aria-live="polite" hidden>
+              <div class="form-alert-content">
+                <strong id="form-alert-title" class="form-alert-title"></strong>
+                <p id="form-alert-message" class="form-alert-message"></p>
+              </div>
+              <button type="button" id="view-existing-pass-btn" class="btn btn-secondary btn-sm" hidden>
+                View Existing Pass
+              </button>
+            </div>
+
+            <form id="event-register-form" class="reg-form" novalidate>
+              <div class="form-field">
+                <label for="full-name" class="field-label">
+                  Full Name <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="full-name"
+                  name="fullName"
+                  class="form-input"
+                  placeholder="e.g. Muhammad Bilal Khan"
+                  autocomplete="name"
+                  required
+                >
+                <p id="full-name-error" class="field-error" aria-live="polite"></p>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-field">
+                  <label for="roll-number" class="field-label">
+                    FAST Roll Number <span class="required-mark" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="roll-number"
+                    name="rollNumber"
+                    class="form-input"
+                    placeholder="e.g. 26i-3165 or 25i-0421"
+                    autocomplete="off"
+                    required
+                  >
+                  <p id="roll-number-hint" class="field-hint">Format: YY + campus letter + 4 digits (e.g. 26i-XXXX)</p>
+                  <p id="roll-number-error" class="field-error" aria-live="polite"></p>
+                </div>
+
+                <div class="form-field">
+                  <label for="university-email" class="field-label">
+                    University Email <span class="required-mark" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="university-email"
+                    name="email"
+                    class="form-input"
+                    placeholder="e.g. i263165@isb.nu.edu.pk"
+                    autocomplete="email"
+                    required
+                  >
+                  <p id="university-email-hint" class="field-hint">Preferred: @isb.nu.edu.pk (or valid email)</p>
+                  <p id="university-email-error" class="field-error" aria-live="polite"></p>
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-field">
+                  <label for="department" class="field-label">
+                    Department <span class="required-mark" aria-hidden="true">*</span>
+                  </label>
+                  <select id="department" name="department" class="form-select" required>
+                    <option value="">Select Department</option>
+                    <option value="SE">SE &mdash; Software Engineering</option>
+                    <option value="CS">CS &mdash; Computer Science</option>
+                    <option value="AI">AI &mdash; Artificial Intelligence</option>
+                    <option value="DS">DS &mdash; Data Science</option>
+                    <option value="CY">CY &mdash; Cyber Security</option>
+                    <option value="EE">EE &mdash; Electrical Engineering</option>
+                  </select>
+                  <p id="department-error" class="field-error" aria-live="polite"></p>
+                </div>
+
+                <div class="form-field">
+                  <label for="semester" class="field-label">
+                    Semester <span class="required-mark" aria-hidden="true">*</span>
+                  </label>
+                  <select id="semester" name="semester" class="form-select" required>
+                    <option value="">Select Semester</option>
+                    <option value="1st">1st Semester</option>
+                    <option value="2nd">2nd Semester</option>
+                    <option value="3rd">3rd Semester</option>
+                    <option value="4th">4th Semester</option>
+                    <option value="5th">5th Semester</option>
+                    <option value="6th">6th Semester</option>
+                    <option value="7th">7th Semester</option>
+                    <option value="8th">8th Semester</option>
+                  </select>
+                  <p id="semester-error" class="field-error" aria-live="polite"></p>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <span class="field-label" id="participation-label">
+                  Participation Type <span class="required-mark" aria-hidden="true">*</span>
+                </span>
+                <div class="participation-toggle" role="radiogroup" aria-labelledby="participation-label">
+                  <label class="radio-card">
+                    <input type="radio" name="participationType" value="Solo" checked>
+                    <span class="radio-card-body">
+                      <strong class="radio-card-title">Solo Participant</strong>
+                      <span class="radio-card-sub">Individual entry or on-site matching</span>
+                    </span>
+                  </label>
+
+                  <label class="radio-card">
+                    <input type="radio" name="participationType" value="Team">
+                    <span class="radio-card-body">
+                      <strong class="radio-card-title">Team Entry</strong>
+                      <span class="radio-card-sub">Competing with a squad or partner</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div id="team-name-group" class="form-field team-name-panel" hidden>
+                <label for="team-name" class="field-label">
+                  Team Name <span class="optional-tag">(Optional)</span>
+                </label>
+                <input
+                  type="text"
+                  id="team-name"
+                  name="teamName"
+                  class="form-input"
+                  placeholder="e.g. NullPointers FAST"
+                  autocomplete="off"
+                >
+                <p id="team-name-hint" class="field-hint">Leave blank if your squad name is still undecided.</p>
+                <p id="team-name-error" class="field-error" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="phone-number" class="field-label">
+                  WhatsApp / Phone Number <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="phone-number"
+                  name="phone"
+                  class="form-input"
+                  placeholder="e.g. 0300-1234567 or +923001234567"
+                  autocomplete="tel"
+                  required
+                >
+                <p id="phone-number-hint" class="field-hint">Used for urgent event check-in updates and room changes.</p>
+                <p id="phone-number-error" class="field-error" aria-live="polite"></p>
+              </div>
+
+              <div class="form-submit-row">
+                <button type="submit" id="submit-registration-btn" class="btn btn-primary btn-full">
+                  Confirm Registration &amp; Generate Pass
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Instant Digital Event Pass Card -->
+          <div id="digital-pass-panel" class="digital-pass-panel" hidden aria-live="polite">
+            <div class="pass-confirmation-banner">
+              <span class="pass-check-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <div>
+                <h2 class="pass-banner-title">Registration Confirmed!</h2>
+                <p class="pass-banner-sub">Your seat has been saved locally and your Digital Event Pass is ready for FAST-NUCES H-12 check-in.</p>
+              </div>
+            </div>
+
+            <article class="digital-pass-ticket" aria-label="Digital Event Pass">
+              <header class="ticket-top">
+                <div class="ticket-brand">
+                  <span class="ticket-chip">NCS DIGITAL PASS</span>
+                  <span class="ticket-campus">FAST-NUCES Islamabad (H-12)</span>
+                </div>
+                <div class="ticket-id-box">
+                  <span class="ticket-id-label">Registration ID</span>
+                  <strong id="pass-reg-id" class="ticket-id-value">NX-2026-0000</strong>
+                </div>
+              </header>
+
+              <div class="ticket-event-block">
+                <span id="pass-event-category" class="ticket-category-pill">Hackathons</span>
+                <h3 id="pass-event-title" class="ticket-event-title">Nexus CodeRush 2026 Hackathon</h3>
+                <p id="pass-event-host" class="ticket-event-host">Nexus Computing Society</p>
+              </div>
+
+              <div class="ticket-perforation" aria-hidden="true">
+                <span class="perf-notch perf-notch--left"></span>
+                <span class="perf-line"></span>
+                <span class="perf-notch perf-notch--right"></span>
+              </div>
+
+              <dl class="ticket-details-grid">
+                <div class="ticket-detail">
+                  <dt>Participant</dt>
+                  <dd id="pass-student-name"></dd>
+                </div>
+                <div class="ticket-detail">
+                  <dt>FAST Roll Number</dt>
+                  <dd id="pass-roll-number" class="ticket-mono"></dd>
+                </div>
+                <div class="ticket-detail">
+                  <dt>Department &amp; Semester</dt>
+                  <dd id="pass-dept-sem"></dd>
+                </div>
+                <div class="ticket-detail">
+                  <dt>Participation</dt>
+                  <dd id="pass-participation"></dd>
+                </div>
+                <div class="ticket-detail">
+                  <dt>Date &amp; Time</dt>
+                  <dd id="pass-event-date"></dd>
+                </div>
+                <div class="ticket-detail">
+                  <dt>Venue</dt>
+                  <dd id="pass-event-venue"></dd>
+                </div>
+              </dl>
+
+              <footer class="ticket-bottom">
+                <div class="ticket-status-wrap">
+                  <span class="ticket-valid-dot" aria-hidden="true"></span>
+                  <span>Entry: <strong id="pass-event-fee">Free</strong></span>
+                </div>
+                <button type="button" id="copy-pass-id-btn" class="ticket-copy-btn">
+                  Copy Pass ID
+                </button>
+              </footer>
+            </article>
+
+            <div class="pass-actions">
+              <button type="button" id="register-another-btn" class="btn btn-secondary">
+                Register for Another Event
+              </button>
+              <a href="dashboard.html" class="btn btn-primary">
+                View My Dashboard
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand footer-brand-link">
+          <img
+            src="../images/logo.jpg"
+            alt="Nexus Computing Society Logo"
+            class="brand-logo"
+            width="40"
+            height="40"
+          >
+          <span class="brand-text">
+            <strong class="brand-title">Nexus</strong>
+            <span class="brand-subtitle">Computing Society</span>
+          </span>
+        </a>
+        <p class="footer-tagline">
+          Empowering student developers, security researchers, AI builders, and digital creators across campus.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Portal Pages</h2>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="about.html">About Society</a></li>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="events.html">Events Listing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Participation</h2>
+        <ul class="footer-links">
+          <li><a href="event-details.html">Event Details</a></li>
+          <li><a href="event-register.html">Event Registration</a></li>
+          <li><a href="contact.html">Contact &amp; Inquiries</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Campus Chapter</h2>
+        <p class="footer-meta">FAST-NUCES Islamabad (H-12), Innovation Block C</p>
+        <p class="footer-meta">Office Hours: Mon &ndash; Fri, 10:00 AM &ndash; 4:00 PM</p>
+        <p class="footer-meta">nexus.society@isb.nu.edu.pk</p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Nexus Computing Society. All rights reserved.</p>
+      <p class="footer-note">Built for the University Computing Portal</p>
+    </div>
+  </footer>
+
+  <script src="../js/event-register.js"></script>
+</body>
+</html>
