@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Student Profile for the Nexus Computing Society (NCS) FAST-NUCES Islamabad portal. Manage your bio, technical skills, notification preferences, and password security.">
+  <title>Student Profile | Nexus Computing Society</title>
+  <link rel="stylesheet" href="../css/student-account.css">
+  <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Sticky Header & Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="Nexus Computing Society Home">
+        <img
+          src="../images/logo.png"
+          alt="Nexus Computing Society Logo"
+          class="brand-logo"
+          width="44"
+          height="44"
+        >
+        <div class="brand-text">
+          <span class="brand-name">Nexus Computing Society</span>
+          <span class="brand-tagline">Student Portal</span>
+        </div>
+      </a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-controls="primary-nav"
+        aria-expanded="false"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-line" aria-hidden="true"></span>
+        <span class="hamburger-line" aria-hidden="true"></span>
+        <span class="hamburger-line" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="primary-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="workshops.html" class="nav-link">Workshops</a></li>
+          <li><a href="event-register.html" class="nav-link">Register Event</a></li>
+          <li><a href="profile.html" class="nav-link is-active" aria-current="page">Profile</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+          <li id="nav-login-item"><a href="login.html" class="nav-link nav-link-cta">Student Login</a></li>
+          <li id="nav-signout-item" hidden>
+            <button type="button" id="sign-out-btn" class="btn-nav-signout">Sign Out</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Student Profile Content -->
+  <main id="main-content" class="profile-main">
+    <div id="profile-page" class="container profile-container">
+
+      <!-- 1. Profile Overview Banner & Live Activity Stats -->
+      <section class="profile-banner-card" aria-labelledby="profile-name-heading">
+        <div class="profile-banner-top">
+          <div class="profile-identity">
+            <div class="profile-avatar" id="profile-avatar" aria-hidden="true">HT</div>
+
+            <div class="profile-identity-text">
+              <div class="profile-badge-row">
+                <span class="portal-badge">FAST-NUCES Student Profile</span>
+                <span class="session-pill" id="profile-session-pill" hidden>Active Session</span>
+              </div>
+
+              <h1 id="profile-name-heading" class="profile-name">Hamza Tariq</h1>
+              <p class="profile-bio-preview" id="profile-bio-preview">
+                Software Engineering undergraduate at FAST-NUCES Islamabad passionate about systems programming, web architecture, and open-source collaboration.
+              </p>
+
+              <div class="student-meta-list" aria-label="Student academic details">
+                <span class="meta-chip">
+                  <span class="meta-chip-label">Roll No</span>
+                  <strong id="profile-roll">26I-3174</strong>
+                </span>
+                <span class="meta-chip">
+                  <span class="meta-chip-label">Degree &amp; Section</span>
+                  <strong id="profile-degree-section">BS Software Engineering — SE-1D</strong>
+                </span>
+                <span class="meta-chip">
+                  <span class="meta-chip-label">Campus</span>
+                  <strong id="profile-campus">FAST-NUCES Islamabad</strong>
+                </span>
+                <span class="meta-chip" id="profile-email-chip">
+                  <span class="meta-chip-label">NU Email</span>
+                  <strong id="profile-email">i263174@isb.nu.edu.pk</strong>
+                </span>
+              </div>
+
+              <div class="profile-quick-links" id="profile-quick-links" aria-label="External developer profiles">
+                <a
+                  id="profile-github-link"
+                  href="https://github.com/hamzatariq-dev"
+                  class="profile-social-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"></path>
+                  </svg>
+                  <span>GitHub</span>
+                </a>
+                <a
+                  id="profile-linkedin-link"
+                  href="https://www.linkedin.com/in/hamza-tariq-se"
+                  class="profile-social-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
+                  </svg>
+                  <span>LinkedIn</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-banner-actions">
+            <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
+            <a href="event-register.html" class="btn btn-primary">Register Event</a>
+          </div>
+        </div>
+
+        <!-- 3 Live Stat Counters Synced from localStorage -->
+        <div class="profile-stats-grid" aria-label="Live student activity statistics">
+          <article class="kpi-card profile-stat-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Joined Societies</span>
+              <span class="kpi-icon" aria-hidden="true">01</span>
+            </div>
+            <p class="kpi-value" id="stat-societies">3</p>
+            <p class="kpi-meta">Active campus society wings</p>
+          </article>
+
+          <article class="kpi-card profile-stat-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Registered Events</span>
+              <span class="kpi-icon" aria-hidden="true">02</span>
+            </div>
+            <p class="kpi-value" id="stat-events">2</p>
+            <p class="kpi-meta">Confirmed active event passes</p>
+          </article>
+
+          <article class="kpi-card profile-stat-card">
+            <div class="kpi-header">
+              <span class="kpi-label">Earned Badges</span>
+              <span class="kpi-icon" aria-hidden="true">03</span>
+            </div>
+            <p class="kpi-value" id="stat-badges">4</p>
+            <p class="kpi-meta">Verified NCS achievements</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Workspace Grid: Edit Profile Form + Preferences & Security -->
+      <div class="profile-workspace-grid">
+
+        <!-- 2. Interactive Edit Profile Form -->
+        <section class="dashboard-card profile-edit-card" aria-labelledby="edit-profile-heading">
+          <div class="card-header">
+            <div>
+              <h2 id="edit-profile-heading" class="card-title">Edit Student Profile</h2>
+              <p class="card-subtitle">Update your display identity, developer links, and technical skill tags.</p>
+            </div>
+          </div>
+
+          <!-- Electric Lime Green Confirmation / Validation Banner -->
+          <div
+            id="profile-save-status"
+            class="profile-status-banner"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></div>
+
+          <form id="profile-edit-form" class="auth-form" novalidate>
+            <div class="form-group">
+              <label for="profile-input-name" class="form-label">
+                Full Name <span class="required-mark" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="text"
+                id="profile-input-name"
+                name="fullName"
+                class="form-input"
+                placeholder="e.g. Hamza Tariq"
+                autocomplete="name"
+                maxlength="60"
+                aria-describedby="profile-input-name-error"
+                required
+              >
+              <p id="profile-input-name-error" class="field-error" role="alert" hidden></p>
+            </div>
+
+            <div class="form-group">
+              <div class="label-with-counter">
+                <label for="profile-input-bio" class="form-label">Display Bio</label>
+                <span class="char-counter" id="bio-char-count">0 / 240</span>
+              </div>
+              <textarea
+                id="profile-input-bio"
+                name="bio"
+                class="form-input form-textarea"
+                rows="3"
+                maxlength="240"
+                placeholder="Share your computing interests, semester focus, or society goals..."
+                aria-describedby="profile-input-bio-error"
+              ></textarea>
+              <p id="profile-input-bio-error" class="field-error" role="alert" hidden></p>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="profile-input-phone" class="form-label">Phone Number</label>
+                <input
+                  type="tel"
+                  id="profile-input-phone"
+                  name="phone"
+                  class="form-input"
+                  placeholder="e.g. +92 300 5550194"
+                  autocomplete="tel"
+                  aria-describedby="profile-input-phone-hint profile-input-phone-error"
+                >
+                <p id="profile-input-phone-hint" class="field-hint">Format: +92 3XX XXXXXXX or 03XX-XXXXXXX</p>
+                <p id="profile-input-phone-error" class="field-error" role="alert" hidden></p>
+              </div>
+
+              <div class="form-group">
+                <label for="profile-input-github" class="form-label">GitHub Profile URL</label>
+                <input
+                  type="url"
+                  id="profile-input-github"
+                  name="githubUrl"
+                  class="form-input"
+                  placeholder="https://github.com/username"
+                  aria-describedby="profile-input-github-error"
+                >
+                <p id="profile-input-github-error" class="field-error" role="alert" hidden></p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="profile-input-linkedin" class="form-label">LinkedIn Profile URL</label>
+              <input
+                type="url"
+                id="profile-input-linkedin"
+                name="linkedinUrl"
+                class="form-input"
+                placeholder="https://www.linkedin.com/in/username"
+                aria-describedby="profile-input-linkedin-error"
+              >
+              <p id="profile-input-linkedin-error" class="field-error" role="alert" hidden></p>
+            </div>
+
+            <!-- Interactive Technical Skills Tag Manager -->
+            <div class="form-group">
+              <label for="new-skill-input" class="form-label">Technical Skills</label>
+              <div class="skills-manager" id="skills-manager">
+                <ul class="skills-list" id="skills-tag-list" aria-label="Current technical skills"></ul>
+                <p class="skills-empty" id="skills-empty-state" hidden>
+                  No skills added yet. Add your stack below.
+                </p>
+
+                <div class="skill-input-row">
+                  <input
+                    type="text"
+                    id="new-skill-input"
+                    class="form-input"
+                    placeholder="Add skill (e.g. React, Docker, SQL)"
+                    maxlength="30"
+                    aria-describedby="skill-input-hint skill-input-error"
+                  >
+                  <button type="button" id="add-skill-btn" class="btn btn-demo btn-add-skill">
+                    + Add Skill
+                  </button>
+                </div>
+                <p id="skill-input-hint" class="field-hint">
+                  Press Enter or click Add Skill to append a tag. Click × to remove.
+                </p>
+                <p id="skill-input-error" class="field-error" role="alert" hidden></p>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">
+              Save Profile Changes
+            </button>
+          </form>
+        </section>
+
+        <!-- 3. Notification Preferences & Password Security Card -->
+        <div class="profile-side-column">
+
+          <!-- Notification Preferences -->
+          <section class="dashboard-card prefs-card" aria-labelledby="prefs-heading">
+            <div class="card-header prefs-header">
+              <div>
+                <h2 id="prefs-heading" class="card-title">Notification Preferences</h2>
+                <p class="card-subtitle">Changes save automatically to your browser.</p>
+              </div>
+              <span class="prefs-saved-badge" id="prefs-saved-badge" role="status" aria-live="polite" hidden>
+                Saved
+              </span>
+            </div>
+
+            <div class="prefs-list">
+              <div class="pref-item">
+                <div class="pref-copy">
+                  <label for="pref-event-reminders" class="pref-title">Event Reminder Alerts</label>
+                  <p class="pref-desc">Alerts before registered NCS workshops, seminars, and hackathons.</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="pref-event-reminders" class="switch-input" role="switch">
+                  <span class="switch-slider" aria-hidden="true"></span>
+                </label>
+              </div>
+
+              <div class="pref-item">
+                <div class="pref-copy">
+                  <label for="pref-recruitment" class="pref-title">Society Recruitment Notices</label>
+                  <p class="pref-desc">Updates when NCS technical wings and teams open inductions.</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="pref-recruitment" class="switch-input" role="switch">
+                  <span class="switch-slider" aria-hidden="true"></span>
+                </label>
+              </div>
+
+              <div class="pref-item">
+                <div class="pref-copy">
+                  <label for="pref-weekly-digest" class="pref-title">Weekly Digest Emails</label>
+                  <p class="pref-desc">Weekly roundup of campus coding labs and community highlights.</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="pref-weekly-digest" class="switch-input" role="switch">
+                  <span class="switch-slider" aria-hidden="true"></span>
+                </label>
+              </div>
+            </div>
+          </section>
+
+          <!-- Password Security Card -->
+          <section class="dashboard-card security-card" aria-labelledby="security-heading">
+            <div class="card-header">
+              <div>
+                <h2 id="security-heading" class="card-title">Password Security</h2>
+                <p class="card-subtitle">Keep your FAST-NUCES portal account protected.</p>
+              </div>
+            </div>
+
+            <div
+              id="password-status"
+              class="profile-status-banner"
+              role="status"
+              aria-live="polite"
+              hidden
+            ></div>
+
+            <form id="password-update-form" class="auth-form" novalidate>
+              <div class="form-group">
+                <label for="current-password" class="form-label">
+                  Current Password <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <div class="password-wrapper">
+                  <input
+                    type="password"
+                    id="current-password"
+                    name="currentPassword"
+                    class="form-input password-input"
+                    placeholder="Enter current password"
+                    autocomplete="current-password"
+                    aria-describedby="current-password-error"
+                    required
+                  >
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    data-target="current-password"
+                    aria-label="Show password"
+                    aria-pressed="false"
+                  >
+                    <svg class="icon-eye" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <svg class="icon-eye-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path>
+                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  </button>
+                </div>
+                <p id="current-password-error" class="field-error" role="alert" hidden></p>
+              </div>
+
+              <div class="form-group">
+                <label for="new-password" class="form-label">
+                  New Password <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <div class="password-wrapper">
+                  <input
+                    type="password"
+                    id="new-password"
+                    name="newPassword"
+                    class="form-input password-input"
+                    placeholder="8+ chars with upper, number &amp; symbol"
+                    autocomplete="new-password"
+                    aria-describedby="profile-strength-label new-password-error"
+                    required
+                  >
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    data-target="new-password"
+                    aria-label="Show password"
+                    aria-pressed="false"
+                  >
+                    <svg class="icon-eye" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <svg class="icon-eye-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path>
+                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Live Password Strength Meter -->
+                <div class="strength-meter" id="profile-strength-meter" data-strength="empty">
+                  <div class="strength-header">
+                    <span class="strength-title">Password Strength:</span>
+                    <span class="strength-label" id="profile-strength-label">Not set</span>
+                  </div>
+                  <div class="strength-bars" aria-hidden="true">
+                    <span class="strength-bar"></span>
+                    <span class="strength-bar"></span>
+                    <span class="strength-bar"></span>
+                  </div>
+                  <ul class="strength-checklist" aria-label="Password requirements">
+                    <li id="prof-req-length" class="req-item">8+ characters</li>
+                    <li id="prof-req-upper" class="req-item">Uppercase letter (A-Z)</li>
+                    <li id="prof-req-number" class="req-item">Number (0-9)</li>
+                    <li id="prof-req-symbol" class="req-item">Symbol (!@#$...)</li>
+                  </ul>
+                </div>
+
+                <p id="new-password-error" class="field-error" role="alert" hidden></p>
+              </div>
+
+              <div class="form-group">
+                <label for="confirm-password" class="form-label">
+                  Confirm New Password <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <div class="password-wrapper">
+                  <input
+                    type="password"
+                    id="confirm-password"
+                    name="confirmPassword"
+                    class="form-input password-input"
+                    placeholder="Re-enter new password"
+                    autocomplete="new-password"
+                    aria-describedby="confirm-password-error"
+                    required
+                  >
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    data-target="confirm-password"
+                    aria-label="Show password"
+                    aria-pressed="false"
+                  >
+                    <svg class="icon-eye" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <svg class="icon-eye-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path>
+                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  </button>
+                </div>
+                <p id="confirm-password-error" class="field-error" role="alert" hidden></p>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full">
+                Update Password
+              </button>
+            </form>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Matching Society Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-col">
+        <a href="../index.html" class="brand footer-brand">
+          <img
+            src="../images/logo.png"
+            alt="Nexus Computing Society Logo"
+            class="brand-logo"
+            width="40"
+            height="40"
+          >
+          <div class="brand-text">
+            <span class="brand-name">Nexus Computing Society</span>
+            <span class="brand-tagline">Innovate · Code · Collaborate</span>
+          </div>
+        </a>
+        <p class="footer-description">
+          Empowering student developers, researchers, and builders through hands-on workshops, hackathons, and technical mentorship.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Portal Pages</h2>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="about.html">About NCS</a></li>
+          <li><a href="events.html">Events &amp; Hackathons</a></li>
+          <li><a href="workshops.html">Technical Workshops</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Student Hub</h2>
+        <ul class="footer-links">
+          <li><a href="dashboard.html">Member Dashboard</a></li>
+          <li><a href="profile.html" aria-current="page">Student Profile</a></li>
+          <li><a href="event-register.html">Event Registration</a></li>
+          <li><a href="login.html">Student Login</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Campus Chapter</h2>
+        <p class="footer-meta">FAST-NUCES Islamabad Campus</p>
+        <p class="footer-meta">A.K. Brohi Road, H-11/4, Islamabad</p>
+        <p class="footer-meta">ncs@isb.nu.edu.pk</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; <span id="footer-year">2026</span> Nexus Computing Society. All rights reserved.</p>
+        <p class="footer-bottom-tag">SE-D Group 09 · University Portal</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/profile.js"></script>
+</body>
+</html>
