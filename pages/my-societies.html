@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your joined FAST-NUCES Islamabad student societies, leadership roles, upcoming events, and recent society announcements.">
+  <title>My Societies | Nexus Computing Society</title>
+  <link rel="stylesheet" href="../css/membership.css">
+  <link rel="stylesheet" href="../css/my-societies.css">
+</head>
+<body>
+  <!-- Sticky Navigation Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="Nexus Computing Society Home">
+        <img
+          src="../images/logo.png"
+          alt="Nexus Computing Society Logo"
+          class="brand-logo"
+          width="40"
+          height="40"
+          onerror="this.onerror=null;this.src='../images/logo.jpg';"
+        >
+        <div class="brand-text">
+          <span class="brand-name">Nexus Computing Society</span>
+          <span class="brand-sub">FAST-NUCES Islamabad</span>
+        </div>
+      </a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="navToggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="primaryNav"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <nav class="primary-nav" id="primaryNav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="wings.html" class="nav-link">Technical Wings</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="my-societies.html" class="nav-link active" aria-current="page">My Societies</a></li>
+          <li><a href="membership-status.html" class="nav-link">Track Status</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><a href="join-society.html" class="nav-link nav-cta">Join Society</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Breadcrumb, Page Header & Live Stats Bar -->
+    <section class="dashboard-hero" aria-labelledby="my-societies-heading">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol class="breadcrumb-list">
+            <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+            <li class="breadcrumb-sep" aria-hidden="true">/</li>
+            <li class="breadcrumb-item"><a href="membership-status.html">Dashboard</a></li>
+            <li class="breadcrumb-sep" aria-hidden="true">/</li>
+            <li class="breadcrumb-item breadcrumb-current" aria-current="page">My Societies</li>
+          </ol>
+        </nav>
+
+        <div class="hero-header-row">
+          <div>
+            <span class="hero-badge">
+              <span class="hero-badge-dot" aria-hidden="true"></span>
+              Student Society Dashboard
+            </span>
+            <h1 id="my-societies-heading" class="hero-title">My Joined Societies</h1>
+            <p class="hero-subtitle">
+              Track your active FAST-NUCES memberships, executive roles, upcoming campus lab sessions, and society announcements in one place.
+            </p>
+          </div>
+          <div class="hero-cta-wrap">
+            <a href="societies.html" class="btn btn-primary btn-lg">+ Explore More Societies</a>
+          </div>
+        </div>
+
+        <!-- 3 Dynamic Summary Cards -->
+        <div class="stats-grid" aria-live="polite">
+          <div class="stat-card stat-card-highlight">
+            <div class="stat-card-info">
+              <span class="stat-card-label">Total Societies Joined</span>
+              <strong id="statTotalSocieties" class="stat-card-value">0</strong>
+            </div>
+            <div class="stat-card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-info">
+              <span class="stat-card-label">Leadership Roles</span>
+              <strong id="statLeadershipRoles" class="stat-card-value">0</strong>
+            </div>
+            <div class="stat-card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-info">
+              <span class="stat-card-label">Upcoming Society Events</span>
+              <strong id="statUpcomingEvents" class="stat-card-value">0</strong>
+            </div>
+            <div class="stat-card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Workspace: Filter Bar, Joined Societies Grid & Announcements Sidebar -->
+    <section class="workspace-section" aria-label="Joined Societies and Announcements">
+      <div class="container">
+        <!-- Filter & Search Bar -->
+        <div class="controls-toolbar">
+          <div class="filter-pills" role="group" aria-label="Filter societies by role">
+            <button type="button" class="filter-btn active" data-filter="All">All</button>
+            <button type="button" class="filter-btn" data-filter="Core Member">Core Member</button>
+            <button type="button" class="filter-btn" data-filter="Lead/Executive">Lead/Executive</button>
+          </div>
+
+          <div class="search-box">
+            <label for="societySearchInput" class="sr-only">Search joined societies</label>
+            <svg class="search-box-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="search"
+              id="societySearchInput"
+              class="search-input"
+              placeholder="Search society, category, or room..."
+              aria-label="Search joined societies"
+            >
+          </div>
+        </div>
+
+        <div class="dashboard-layout">
+          <!-- Left Column: Joined Societies Grid -->
+          <div class="societies-column">
+            <div class="section-bar">
+              <h2 class="section-heading">Active Memberships</h2>
+              <span id="resultsCountLabel" class="results-count" aria-live="polite">0 societies</span>
+            </div>
+
+            <div id="joinedSocietiesGrid" class="societies-grid" aria-live="polite">
+              <!-- Populated dynamically by js/my-societies.js -->
+            </div>
+          </div>
+
+          <!-- Right Column: Recent Society Announcements Sidebar -->
+          <aside class="announcements-sidebar" aria-labelledby="announcements-heading">
+            <div class="sidebar-card">
+              <div class="sidebar-header">
+                <div class="sidebar-title-wrap">
+                  <span class="sidebar-pulse" aria-hidden="true"></span>
+                  <h2 id="announcements-heading" class="sidebar-title">Recent Announcements</h2>
+                </div>
+                <span id="announcementsCount" class="sidebar-count">0</span>
+              </div>
+
+              <div id="announcementsFeed" class="announcements-feed" aria-live="polite">
+                <!-- Populated dynamically by js/my-societies.js -->
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Leave Society Confirmation Modal -->
+  <div
+    id="leaveConfirmModal"
+    class="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="leaveModalTitle"
+    hidden
+  >
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 id="leaveModalTitle" class="modal-title">Leave Society?</h2>
+        <button type="button" id="closeLeaveModalBtn" class="modal-close" aria-label="Close confirmation dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-warning-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div>
+          <p class="modal-message">
+            Are you sure you want to leave <strong id="leaveModalSocietyName">this society</strong>?
+          </p>
+          <p class="modal-subnote">
+            Your active role and upcoming event reminders for this society will be removed from your dashboard. You can rejoin anytime from the societies directory.
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancelLeaveBtn" class="btn btn-outline">Cancel</button>
+        <button type="button" id="confirmLeaveBtn" class="btn btn-danger">Confirm Leave</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Matching Society Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand footer-brand-link">
+          <img
+            src="../images/logo.png"
+            alt="Nexus Computing Society Logo"
+            class="brand-logo"
+            width="36"
+            height="36"
+            onerror="this.onerror=null;this.src='../images/logo.jpg';"
+          >
+          <span class="brand-name">Nexus Computing Society</span>
+        </a>
+        <p class="footer-desc">
+          Empowering FAST-NUCES students through hands-on engineering, competitive programming, research, and collaborative tech leadership.
+        </p>
+      </div>
+
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Portal</h3>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="wings.html">Technical Wings</a></li>
+          <li><a href="events.html">Events Calendar</a></li>
+          <li><a href="my-societies.html">My Societies</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Membership</h3>
+        <ul class="footer-links">
+          <li><a href="join-society.html">Join a Society</a></li>
+          <li><a href="membership-status.html">Membership Status</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Campus</h3>
+        <p class="footer-meta">FAST-NUCES, A.K. Brohi Road, H-11/4, Islamabad</p>
+        <p class="footer-meta">Email: nexus@isb.nu.edu.pk</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2026 Nexus Computing Society. All rights reserved.</p>
+        <p>Built by SE-D Group 09</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/my-societies.js"></script>
+</body>
+</html>
