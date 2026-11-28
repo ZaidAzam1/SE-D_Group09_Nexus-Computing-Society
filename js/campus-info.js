@@ -481,6 +481,7 @@
     initMobileNav();
     initAnnouncementsPage();
     initGalleryPage();
+    initContactPage();
   });
 
   /* ==========================================================================
@@ -1169,5 +1170,442 @@
 
     updateCategoryCounts();
     renderGallery();
+  }
+
+  /* ==========================================================================
+     Page 12: Contact & Support Form (localStorage Persisted) & FAQ Accordion
+     ========================================================================== */
+  const CONTACT_STORAGE_KEY = "ncs_contact_inquiries";
+  const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const ROLL_PATTERN = /^[A-Za-z0-9\s-]{3,24}$/;
+
+  /**
+   * Loads saved contact inquiry tickets from localStorage.
+   * @returns {Array<Object>}
+   */
+  function loadContactInquiries() {
+    try {
+      const raw = window.localStorage.getItem(CONTACT_STORAGE_KEY);
+      if (!raw) {
+        return [];
+      }
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) {
+        return [];
+      }
+      return parsed.filter(
+        (entry) =>
+          entry &&
+          typeof entry === "object" &&
+          typeof entry.ticketId === "string" &&
+          typeof entry.subject === "string"
+      );
+    } catch (error) {
+      return [];
+    }
+  }
+
+  /**
+   * Persists contact inquiry tickets to localStorage.
+   * @param {Array<Object>} inquiries
+   */
+  function saveContactInquiries(inquiries) {
+    try {
+      window.localStorage.setItem(CONTACT_STORAGE_KEY, JSON.stringify(inquiries));
+    } catch (error) {
+      // Ignore storage quota or privacy-mode errors gracefully
+    }
+  }
+
+  /**
+   * Generates a unique Ticket ID in the TKT-XXXX format.
+   * @param {Array<Object>} existingInquiries
+   * @returns {string}
+   */
+  function generateTicketId(existingInquiries) {
+    const usedIds = new Set(existingInquiries.map((item) => item.ticketId));
+    for (let attempt = 0; attempt < 50; attempt += 1) {
+      const digits = Math.floor(1000 + Math.random() * 9000);
+      const candidate = "TKT-" + String(digits);
+      if (!usedIds.has(candidate)) {
+        return candidate;
+      }
+    }
+    return "TKT-" + String(Date.now()).slice(-4);
+  }
+
+  /**
+   * Formats an ISO timestamp for ticket confirmation and history cards.
+   * @param {string} isoTimestamp
+   * @returns {string}
+   */
+  function formatTicketTimestamp(isoTimestamp) {
+    const parsed = new Date(isoTimestamp);
+    if (Number.isNaN(parsed.getTime())) {
+      return isoTimestamp;
+    }
+    return parsed.toLocaleString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit"
+    });
+  }
+
+  /**
+   * Initializes the Contact & Support inquiry form, localStorage ticket history, and FAQ accordion.
+   */
+  function initContactPage() {
+    const form = document.getElementById("contact-inquiry-form");
+    const faqAccordion = document.getElementById("faq-accordion");
+    if (!form && !faqAccordion) {
+      return;
+    }
+
+    initFaqAccordion(faqAccordion);
+
+    if (!form) {
+      return;
+    }
+
+    const fullNameInput = document.getElementById("contact-full-name");
+    const emailInput = document.getElementById("contact-email");
+    const rollInput = document.getElementById("contact-roll-number");
+    const categorySelect = document.getElementById("contact-category");
+    const subjectInput = document.getElementById("contact-subject");
+    const messageInput = document.getElementById("contact-message");
+
+    const confirmationCard = document.getElementById("ticket-confirmation-card");
+    const confirmationTicketId = document.getElementById("confirmation-ticket-id");
+    const confirmationSummary = document.getElementById("confirmation-summary");
+    const confirmationTimestamp = document.getElementById("confirmation-timestamp");
+    const dismissConfirmationBtn = document.getElementById("dismiss-confirmation-btn");
+
+    const ticketsBadgeEl = document.getElementById("saved-tickets-badge");
+    const ticketsCountEl = document.getElementById("saved-tickets-count");
+    const ticketsLabelEl = document.getElementById("saved-tickets-label");
+    const recentPanelEl = document.getElementById("recent-tickets-panel");
+    const recentListEl = document.getElementById("recent-tickets-list");
+    const clearTicketsBtn = document.getElementById("clear-tickets-btn");
+
+    let savedInquiries = loadContactInquiries();
+
+    const fieldRules = [
+      {
+        input: fullNameInput,
+        errorEl: document.getElementById("error-full-name"),
+        validate: (value) => {
+          const trimmed = value.trim();
+          if (!trimmed) {
+            return "Please enter your full name.";
+          }
+          if (trimmed.length < 2) {
+            return "Full name must be at least 2 characters.";
+          }
+          return "";
+        }
+      },
+      {
+        input: emailInput,
+        errorEl: document.getElementById("error-email"),
+        validate: (value) => {
+          const trimmed = value.trim();
+          if (!trimmed) {
+            return "Please enter your email address.";
+          }
+          if (!EMAIL_PATTERN.test(trimmed)) {
+            return "Please enter a valid email address (e.g., i241234@isb.nu.edu.pk).";
+          }
+          return "";
+        }
+      },
+      {
+        input: rollInput,
+        errorEl: document.getElementById("error-roll-number"),
+        validate: (value) => {
+          const trimmed = value.trim();
+          if (trimmed && !ROLL_PATTERN.test(trimmed)) {
+            return "Roll number should be 3–24 characters using letters, numbers, or hyphens (e.g., 24I-1234).";
+          }
+          return "";
+        }
+      },
+      {
+        input: categorySelect,
+        errorEl: document.getElementById("error-category"),
+        validate: (value) => {
+          if (!value.trim()) {
+            return "Please select an inquiry category.";
+          }
+          return "";
+        }
+      },
+      {
+        input: subjectInput,
+        errorEl: document.getElementById("error-subject"),
+        validate: (value) => {
+          const trimmed = value.trim();
+          if (!trimmed) {
+            return "Please enter a subject for your inquiry.";
+          }
+          if (trimmed.length < 3) {
+            return "Subject must be at least 3 characters.";
+          }
+          return "";
+        }
+      },
+      {
+        input: messageInput,
+        errorEl: document.getElementById("error-message"),
+        validate: (value) => {
+          const trimmed = value.trim();
+          if (!trimmed) {
+            return "Please provide details about your inquiry.";
+          }
+          if (trimmed.length < 10) {
+            return "Please enter at least 10 characters so our team can assist you.";
+          }
+          return "";
+        }
+      }
+    ];
+
+    const setFieldError = (input, errorEl, errorMessage) => {
+      if (!input || !errorEl) {
+        return;
+      }
+      errorEl.textContent = errorMessage;
+      if (errorMessage) {
+        input.setAttribute("aria-invalid", "true");
+      } else {
+        input.removeAttribute("aria-invalid");
+      }
+    };
+
+    const clearAllFieldErrors = () => {
+      fieldRules.forEach(({ input, errorEl }) => {
+        setFieldError(input, errorEl, "");
+      });
+    };
+
+    const renderSavedTickets = () => {
+      const count = savedInquiries.length;
+      if (ticketsCountEl) {
+        ticketsCountEl.textContent = String(count);
+      }
+      if (ticketsLabelEl) {
+        ticketsLabelEl.textContent = count === 1 ? "Logged Ticket" : "Logged Tickets";
+      }
+      if (ticketsBadgeEl) {
+        ticketsBadgeEl.classList.toggle("has-unread", count > 0);
+      }
+
+      if (!recentPanelEl || !recentListEl) {
+        return;
+      }
+
+      recentListEl.replaceChildren();
+      if (count === 0) {
+        recentPanelEl.hidden = true;
+        return;
+      }
+
+      recentPanelEl.hidden = false;
+      savedInquiries.slice(0, 6).forEach((ticket) => {
+        const itemEl = document.createElement("li");
+        itemEl.className = "recent-ticket-item";
+
+        const topRow = document.createElement("div");
+        topRow.className = "recent-ticket-top";
+
+        const idSpan = document.createElement("span");
+        idSpan.className = "recent-ticket-id";
+        idSpan.textContent = ticket.ticketId;
+
+        const catSpan = document.createElement("span");
+        catSpan.className = "recent-ticket-category";
+        catSpan.textContent = ticket.category || "General Query";
+
+        topRow.append(idSpan, catSpan);
+
+        const subjectEl = document.createElement("p");
+        subjectEl.className = "recent-ticket-subject";
+        subjectEl.textContent = ticket.subject;
+
+        const metaEl = document.createElement("p");
+        metaEl.className = "recent-ticket-meta";
+        const rollPart = ticket.rollNumber ? " · " + ticket.rollNumber : "";
+        metaEl.textContent =
+          (ticket.fullName || "Student") +
+          rollPart +
+          " · " +
+          formatTicketTimestamp(ticket.submittedAt);
+
+        itemEl.append(topRow, subjectEl, metaEl);
+        recentListEl.appendChild(itemEl);
+      });
+    };
+
+    const showConfirmationCard = (ticket) => {
+      if (!confirmationCard) {
+        return;
+      }
+      if (confirmationTicketId) {
+        confirmationTicketId.textContent = ticket.ticketId;
+      }
+      if (confirmationSummary) {
+        confirmationSummary.textContent =
+          'Your "' +
+          ticket.category +
+          '" inquiry ("' +
+          ticket.subject +
+          '") has been saved. Our support desk will respond to ' +
+          ticket.email +
+          ".";
+      }
+      if (confirmationTimestamp) {
+        confirmationTimestamp.textContent =
+          "Logged: " + formatTicketTimestamp(ticket.submittedAt);
+      }
+      confirmationCard.hidden = false;
+      const prefersReducedMotion =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      confirmationCard.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "nearest"
+      });
+    };
+
+    // Clear individual field errors as the user updates inputs
+    fieldRules.forEach(({ input, errorEl, validate }) => {
+      if (!input) {
+        return;
+      }
+      const eventName = input.tagName === "SELECT" ? "change" : "input";
+      input.addEventListener(eventName, () => {
+        if (input.getAttribute("aria-invalid") === "true") {
+          setFieldError(input, errorEl, validate(input.value));
+        }
+      });
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      let firstInvalidInput = null;
+      fieldRules.forEach(({ input, errorEl, validate }) => {
+        if (!input) {
+          return;
+        }
+        const errorMsg = validate(input.value);
+        setFieldError(input, errorEl, errorMsg);
+        if (errorMsg && !firstInvalidInput) {
+          firstInvalidInput = input;
+        }
+      });
+
+      if (firstInvalidInput) {
+        firstInvalidInput.focus();
+        return;
+      }
+
+      const inquiry = {
+        ticketId: generateTicketId(savedInquiries),
+        fullName: fullNameInput ? fullNameInput.value.trim() : "",
+        email: emailInput ? emailInput.value.trim() : "",
+        rollNumber: rollInput ? rollInput.value.trim().toUpperCase() : "",
+        category: categorySelect ? categorySelect.value.trim() : "",
+        subject: subjectInput ? subjectInput.value.trim() : "",
+        message: messageInput ? messageInput.value.trim() : "",
+        submittedAt: new Date().toISOString()
+      };
+
+      savedInquiries.unshift(inquiry);
+      saveContactInquiries(savedInquiries);
+
+      form.reset();
+      clearAllFieldErrors();
+      renderSavedTickets();
+      showConfirmationCard(inquiry);
+    });
+
+    form.addEventListener("reset", () => {
+      clearAllFieldErrors();
+    });
+
+    if (dismissConfirmationBtn && confirmationCard) {
+      dismissConfirmationBtn.addEventListener("click", () => {
+        confirmationCard.hidden = true;
+        if (fullNameInput) {
+          fullNameInput.focus();
+        }
+      });
+    }
+
+    if (clearTicketsBtn) {
+      clearTicketsBtn.addEventListener("click", () => {
+        savedInquiries = [];
+        saveContactInquiries(savedInquiries);
+        renderSavedTickets();
+      });
+    }
+
+    renderSavedTickets();
+  }
+
+  /**
+   * Initializes the accessible FAQ accordion with smooth expand/collapse and keyboard navigation.
+   * @param {HTMLElement | null} accordionEl
+   */
+  function initFaqAccordion(accordionEl) {
+    if (!accordionEl) {
+      return;
+    }
+
+    const triggers = Array.from(accordionEl.querySelectorAll(".faq-trigger"));
+    if (triggers.length === 0) {
+      return;
+    }
+
+    const setExpandedState = (trigger, expanded) => {
+      const itemEl = trigger.closest(".faq-item");
+      const panelId = trigger.getAttribute("aria-controls");
+      const panelEl = panelId ? document.getElementById(panelId) : null;
+
+      trigger.setAttribute("aria-expanded", String(expanded));
+      if (itemEl) {
+        itemEl.classList.toggle("is-open", expanded);
+      }
+      if (panelEl) {
+        panelEl.setAttribute("aria-hidden", String(!expanded));
+      }
+    };
+
+    triggers.forEach((trigger, index) => {
+      trigger.addEventListener("click", () => {
+        const isCurrentlyExpanded = trigger.getAttribute("aria-expanded") === "true";
+        setExpandedState(trigger, !isCurrentlyExpanded);
+      });
+
+      trigger.addEventListener("keydown", (event) => {
+        let nextIndex = -1;
+        if (event.key === "ArrowDown") {
+          nextIndex = (index + 1) % triggers.length;
+        } else if (event.key === "ArrowUp") {
+          nextIndex = (index - 1 + triggers.length) % triggers.length;
+        } else if (event.key === "Home") {
+          nextIndex = 0;
+        } else if (event.key === "End") {
+          nextIndex = triggers.length - 1;
+        }
+
+        if (nextIndex !== -1) {
+          event.preventDefault();
+          triggers[nextIndex].focus();
+        }
+      });
+    });
   }
 })();
